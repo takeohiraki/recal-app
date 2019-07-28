@@ -1,0 +1,38 @@
+{
+  "name": "recal",
+  "version": "1.0.0",
+  "description": "<h1>Goal</h1> <h3>Slack for Calendars. Encouraging productivity and continuity in our calendars</h3>",
+  "main": "server.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "cookie-session": "^1.3.3",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "http-errors": "^1.7.3",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-auth0": "^1.1.0",
+    "path": "^0.12.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
+    "readline": "^1.3.0",
+    "slackbots": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takeohiraki/recal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takeohiraki/recal/issues"
+  },
+  "homepage": "https://github.com/takeohiraki/recal#readme"
+}

@@ -1,0 +1,108 @@
+body {
+    background-color: rgb(41,37,41);
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: white;
+    align-content: center;
+}
+
+.logo {
+    background-color: rgb(41,37,41);
+    margin-top: 50px;
+    margin-left: 75px;
+}
+
+.signin {
+    color: rgb(59,176,106);
+    margin-left: 120px;
+}
+
+.loginbtn {
+    width: 150px;
+    margin-right: 40px;
+    margin-top: 80px;
+    font-size: 27px;
+}
+
+.mainslogan {
+    font-size: 80px;
+    font-weight: bolder;
+    margin-top: 70px;
+    margin-left: 130px;
+}
+
+.image1login,
+.image2login {
+    width: 600px;
+    height: 400px;
+    margin-top: 30px;
+    margin-left: 80px;
+}
+
+.image1login {
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.image2login {
+    position: relative;
+    bottom: 220px;
+    left: 200px;
+    z-index: 2;
+}
+
+.darkstyle {
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    font-size: 38px;
+}
+
+.darkstyletext {
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    font-size: 28px;
+}
+
+.logingoogle {
+    margin-top: 40px;
+    background-color: rgb(253, 155, 91);
+    color: rgb(71, 68, 71);
+    margin-bottom: 150px;
+}
+
+.maintextlogin {
+    font-size: 80px;
+    font-weight: bolder;
+    margin-top: 80px;
+    margin-left: 180px;
+}
+
+.googleloginbtn {
+    margin-left: 170px;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+footer {
+    padding: 10px;
+    clear: both;
+    font-size: 8px;
+    color: rgb(253, 155, 91);
+    text-align: center;
+    background-color: rgb(41,37,41);
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 980px) {
+   
+   
+}
+
+@media screen and (max-width: 768px) {
+  
+  
+}
+
+@media screen and (max-width: 640px) {
+  
+   
+} 

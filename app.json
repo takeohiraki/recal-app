@@ -1,0 +1,14 @@
+{
+    "name": "Recal",
+    "description": "",
+    "repository": "https://github.com/takeohiraki/recal",
+    "logo": "",
+    "keywords": ["node", "express", "static"],
+    "addons": [{
+        "plan": "heroku-postgresql:hobby-dev",
+        "options": {
+          "version": "9.5"
+        }
+     }]
+  }
+  

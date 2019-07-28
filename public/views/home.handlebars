@@ -1,0 +1,23 @@
+{{> navbar-block }}
+<div class="card text-center">
+  <div class="card-header">
+    <p class="welcome">Welcome to {{ name }}</p>
+    {{> buttons/refresh-block }}
+  </div>
+  <div class="card-footer orange text-muted"></div>
+</div>
+<div class="container mt-4">
+  <diV class="row">
+    <div class="col-lg-4 col-md-4">
+      {{> notes/note-block }}
+    </div>
+    <div class="col-lg-4 col-md-4">
+      {{> google/calendar-block }}
+    </div>
+    <div class="col-lg-4 col-md-4">
+      {{> projects/project-block }}
+    </div>
+  </div>
+</div>
+{{!-- {{> buttons/loading-block }} --}}
+{{> footer-block }}

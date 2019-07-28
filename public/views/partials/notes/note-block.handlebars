@@ -1,0 +1,29 @@
+<div class="card bd-light" style="max-width: 35rem;">
+	<div class="card-header topevents">Notes</div>
+	<div class="card-body">
+		<h5 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> Search for a note</h5>
+		{{> buttons/addnotebtn-block }}
+		{{> notes/addnote-block }}
+		<div id="note-messages">
+			<div class="text-right">
+				<input type="text" id="note-search" class="form-control">
+			</div>
+			<div style="overflow-y: scroll; height: 500px;" id="slackNotes">
+			{{#each messages}}
+			<div id="noteDraggableDiv__{{ id }}"
+				class="noteDraggableDiv list-group list-group-item list-group-item-action flex-column align-items-start">
+				<button id="noteDeleteButton__{{ id }}" type="button" class="close noteDeleteButton"
+					data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<b>
+					<p id="noteDraggableMessage__{{ id }}"><i class="fa fa-hashtag" aria-hidden="true"></i>&nbsp;<span class="messageText">{{ message_text }}</span></p>
+				</b>
+				<p class="usertitle"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span>&nbsp;&nbsp;{{ user_name }}</span></p>
+				<p class="datetime">Date Created: {{ createdAt }}</p>
+			</div>
+			{{/each}}
+			</div>
+	</div>
+	</div>
+</div>

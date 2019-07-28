@@ -1,0 +1,28 @@
+<div class="card bd-light project" style="max-width: 35rem;">
+  <div class="card-header topevents">Projects</div>
+  <div class="card-body">
+    <h5 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> Search for a project</h5>
+    {{> buttons/addprojectbtn-block }}
+		{{> projects/addproject-block }}
+    <div id="project-items">
+      <div class="text-right">
+        <input type="text" id="project-search" class="form-control">
+      </div>
+      </div>
+      <div style="overflow-y: scroll; height: 500px;" id="projectsdiv">
+      {{#each projects}}
+      <div id="droppableProjectDiv__{{ id }}"
+        class="droppableProjectDiv list-group list-group-item list-group-item-action flex-column align-items-start">
+        <button id="projectDeleteButton__{{ id }}" type="button" class="close projectDeleteButton" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <p class="usertitle"><b><span class="messageText">{{ name }}</span></b></p>
+        <p class="usertitle">{{ description }}</p>
+        <div id="droppableProjectDivEventArea__{{ id }}" class="droppableProjectDivEventArea">Events:<br></div><br>
+        <p class="datetime">Date Created: {{ createdAt }}</p>
+      </div>
+      {{/each}}
+      </div>
+  </div>
+</div>
