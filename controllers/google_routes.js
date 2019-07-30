@@ -11,20 +11,9 @@ const models = require('../models');
 const googleCalEventsDB = models.google_cal_events;
 const googleCallEventNotes = models.google_cal_event_notes;
 const slackMessages = models.slack_message;
-const auth0_helpers = require(path.join(__dirname, "..", "/helpers/middleware/auth_helpers.js"))
+const auth0_helpers = require('../middleware/auth_helpers')
 
 
-const scopes = [
-    'https://www.googleapis.com/auth/calendar.readonly',
-    'https://www.googleapis.com/auth/userinfo.email'
-];
-
-// Routes the user the the Google login page
-/* router_google.get('/auth/google', passport.authenticate('google', {
-    accessType: 'offline',
-    approvalPrompt: 'force',
-    scope: scopes
-})); */
 
 router_google.get('/google/seed', (req, res) => {
 
@@ -98,42 +87,6 @@ router_google.post('/events/notes', (req, res) => {
     });
 
 });
-
-// After auth, Google routes back and token gets passed back
-/* router_google.get('/auth/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: '/google-session'
-    }),
-    (req, res) => {
-        // console.log("refresh token")
-        // console.log(req.user.refreshToken);
-        req.session.google_token = req.user.token;
-        req.session.google_refresh_token = req.user.refreshToken;
-        res.redirect('/google-session');
-    }
-); */
-
-// provides status of the token
-router_google.get('/google-session', (req, res) => {
-    if (req.session.google_token) {
-        res.cookie('google_token', req.session.google_token);
-        res.json({
-            status: 'session cookie set (' + req.session.google_token + ")"
-        });
-    } else {
-        res.cookie('google_token', '')
-        res.json({
-            status: 'session cookie not set.'
-        });
-    }
-});
-
-// Logs the user out
-/* router_google.get('/google-logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    res.redirect('/google-session');
-}); */
 
 router_google.post("/api/event/add-note", function (req, res) {
 
@@ -215,29 +168,6 @@ router_google.post('/api/google/calendar/events', (req, res) => {
             redirect_uris
         } = credentials.web;
         const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-
-        /*         if (req.session.google_token) {
-                    oAuth2Client.setCredentials({
-                        // refresh_token: req.session.token
-                        refresh_token: req.session.google_token
-                    });
-
-                    // first pulls google calendar events
-                    listEvents(oAuth2Client)
-
-                        // then takes the events, grabs their ids and puts them into an array
-                        .then((resolvedData) => {
-                            return createUpdateGcalDB(resolvedData);
-                        })
-                        // displays next 10 meetings
-                        .then(() => {
-                            return pullNext10(res);
-                        })
-                } else {
-                    res.redirect('/auth/google');
-                } */
-
-        // var googleToken = auth0helpers.refreshGoogleToken(googleRefreshToken)
 
         oAuth2Client.setCredentials({
             refresh_token: googleRefreshToken

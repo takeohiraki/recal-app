@@ -1,37 +1,23 @@
 // Dependencies
 // =============================================================
 var express = require("express");
-require("dotenv").config();
-// var keys = require('./keys.js')
 var path = require("path");
-var passport = require("passport");
-var session = require("express-session");
-var Auth0Strategy = require("passport-auth0");
 var cookieParser = require("cookie-parser");
-var cookieSession = require("cookie-session");
 
-var createError = require("http-errors");
 var logger = require("morgan");
-
-const readline = require("readline");
-
-var google_auth = require("./helpers/oauth_google/auth.js");
-var slack_auth = require("./helpers/oauth_slack/auth.js");
-
 const keys = require('./config/keys');
-
 
 // Sequelize Sync
 // =============================================================
 
 const models = require("./models");
-/* models.sequelize.sync({
+models.sequelize.sync({
     force: false
     // force set to true would drop and recreate the tables.
   })
   .then(() => {
     console.log(`Database & tables created!`)
-  }) */
+  });
 
 // Sets up the Express App
 // =============================================================
@@ -46,20 +32,6 @@ app.use(
   })
 );
 app.use(express.json());
-
-// For Google Oauth
-google_auth(passport);
-slack_auth(passport);
-app.use(passport.initialize());
-
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [COOKIE_KEYS],
-    maxAge: 24 * 60 * 60 * 1000
-  })
-);
-app.use(cookieParser());
 
 //handlebars
 var exphbs = require("express-handlebars");
@@ -112,6 +84,6 @@ app.use(authRouter);
 
 // Starts the server to begin listening
 // =============================================================
-app.listen(process.env.PORT || 3000, function() {
+app.listen(process.env.PORT || 3000, function () {
   console.log("App listening on PORT " + (process.env.PORT || 3000));
 });

@@ -5,12 +5,7 @@ const models = require('../models');
 const slackMessages = models.slack_message;
 const googleEvents = models.google_cal_events;
 const projects = models.projects;
-const axios = require("axios")
-const cookieParser = require('cookie-parser')
-const fetch = require("node-fetch");
-const auth0_helpers = require(path.join(__dirname, "..", "/helpers/middleware/auth_helpers.js"))
-const url = require('url')
-
+const auth0_helpers = require('../middleware/auth_helpers');
 
 // Middleware to see if the request is coming from the auth callback
 const checkAuthOrigin = (req, res, next) => {
