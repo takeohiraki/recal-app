@@ -11,13 +11,13 @@ const keys = require('./config/keys');
 // =============================================================
 
 const models = require("./models");
-models.sequelize.sync({
+/*models.sequelize.sync({
     force: false
     // force set to true would drop and recreate the tables.
   })
   .then(() => {
     console.log(`Database & tables created!`)
-  });
+  });*/
 
 // Sets up the Express App
 // =============================================================
@@ -77,6 +77,9 @@ app.use(auth_routes);
 
 // Starts the server to begin listening
 // =============================================================
-app.listen(process.env.PORT || 3000, function () {
-  console.log("App listening on PORT " + (process.env.PORT || 3000));
+// PORT 5000 for DEV Server (used to be 3000)
+// PORT 3000 for DEV React 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
 });
