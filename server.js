@@ -75,6 +75,25 @@ app.use(project_routes);
 var auth_routes = require("./controllers/auth_routes.js");
 app.use(auth_routes);
 
+
+if (process.env.NODE_ENV === 'production')
+{
+    // Express will serve up production assets.
+    // Like main.js file or main.css file! (React)
+    app.use(express.static('client/build'));
+
+    // Express will serve up the index.html file 
+    // if the route is not recognized.
+    // If route is not part of any of the /routes 
+    // or if not found in client/build 
+    // then use below:
+    const path = require('path');
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
+
 // Starts the server to begin listening
 // =============================================================
 // PORT 5000 for DEV Server (used to be 3000)
