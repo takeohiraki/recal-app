@@ -1,5 +1,5 @@
 var Bot = require("slackbots");
-require("dotenv").config();
+//require("dotenv").config();
 var keys = require("./keys.js");
 
 // settings

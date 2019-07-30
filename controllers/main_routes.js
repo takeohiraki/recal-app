@@ -40,15 +40,11 @@ var modifyUrl = (req, res, next) => {
 
 // Loads home page
 router_main.get("/home", checkAuthOrigin, getAccessToken, modifyUrl, function (req, res) {
-    // console.log(req.url)
 
     console.log("accessToken in /home: " + req.accessToken)
-    // console.log(origin)
 
     var accessToken = req.accessToken
     var origin = req.query.origin
-    
-
 
     auth0_helpers.userId(accessToken, function (result) {
 

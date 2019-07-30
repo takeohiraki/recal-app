@@ -33,6 +33,9 @@ app.use(
 );
 app.use(express.json());
 
+// Use for the Auth process with Auth0
+app.use(cookieParser());
+
 //handlebars
 var exphbs = require("express-handlebars");
 
@@ -71,16 +74,6 @@ app.use(project_routes);
 // Routes for handling auth
 var auth_routes = require("./controllers/auth_routes.js");
 app.use(auth_routes);
-
-// app.get('/authorize', '/home')
-
-app.use(cookieParser());
-
-/* // Routes for handling auth0 login/signup
-var authRouter = require('./controllers/auth.js');
-app.use(authRouter);
-
- */
 
 // Starts the server to begin listening
 // =============================================================
