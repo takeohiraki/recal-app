@@ -43,7 +43,7 @@ router_project.get('/project/seed', (req, res) => {
       slack_user_id: getRandomInt(1111111, 99999999)
     });*/
 
-  res.status(200).redirect('/home');
+  res.status(200);
 
 });
 
@@ -86,11 +86,6 @@ router_project.get("/api/projects", function (req, res) {
   }).then(projects => {
     res.status(200).send(projects);
   });
-
-  /*model_slack.all(function (data) {
-    // console.log(data)
-    res.status(200).send(data.rows);  
-  })*/
 });
 
 router_project.post("/api/project/add-event", function (req, res) {

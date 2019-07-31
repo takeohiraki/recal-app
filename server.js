@@ -1,16 +1,27 @@
+const express = require('express');
+const app = express();
+
 // Dependencies
 // =============================================================
-var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
-
 var logger = require("morgan");
-const keys = require('./config/keys');
+
+// Enable data parsing
+// =============================================================
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(express.json());
+app.get('/', (req, res) => {
+  res.send({
+      "hi": "there"
+  })
+});
 
 // Sequelize Sync
 // =============================================================
-
-const models = require("./models");
+//const models = require("./models");
 /*models.sequelize.sync({
     force: false
     // force set to true would drop and recreate the tables.
@@ -19,41 +30,27 @@ const models = require("./models");
     console.log(`Database & tables created!`)
   });*/
 
-// Sets up the Express App
-// =============================================================
-var app = express();
-
-app.use(express.static(path.join(__dirname, "public")));
-
-// Enable data parsing
-app.use(
-  express.urlencoded({
-    extended: true
-  })
-);
-app.use(express.json());
-
 // Use for the Auth process with Auth0
-app.use(cookieParser());
+//app.use(cookieParser());
 
 //handlebars
-var exphbs = require("express-handlebars");
+//var exphbs = require("express-handlebars");
 
-app.engine(
+/*app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "main"
   })
 );
 app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "/public/views"));
+app.set("views", path.join(__dirname, "/public/views"));*/
 
 // Routes - importing so server can access them
 // =============================================================
 
 // Routes for navigating around app
-var routes_main = require("./controllers/main_routes.js");
-app.use(routes_main);
+/*var routes_main = require("./controllers/main_routes.js");
+app.use(routes_main);*/
 
 // Routes for handling Slack data
 var slack_routes = require("./controllers/slack_routes.js");
@@ -72,9 +69,8 @@ var project_routes = require("./controllers/project_routes.js");
 app.use(project_routes);
 
 // Routes for handling auth
-var auth_routes = require("./controllers/auth_routes.js");
-app.use(auth_routes);
-
+/*var auth_routes = require("./controllers/auth_routes.js");
+app.use(auth_routes);*/
 
 if (process.env.NODE_ENV === 'production')
 {
