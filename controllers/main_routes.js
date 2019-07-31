@@ -87,7 +87,7 @@ router_main.get("/home", checkAuthOrigin, getAccessToken, modifyUrl, function (r
 });
 
 // route to the login page
-router_main.get("/login-spa", function (req, res) {
+/*router_main.get("/login-spa", function (req, res) {
     console.log(__dirname, "..", "public/views/login-spa.html");
     res.sendFile(path.join(__dirname, "..", "public/views/login-spa.html"));
 });
@@ -106,7 +106,7 @@ router_main.get("/googlelogin", function (req, res) {
         name: "Recal",
         style: "darkstyle.css"
     });
-});
+});*/
 
 
 // Export routes for server.js to use.

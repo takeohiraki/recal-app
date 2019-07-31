@@ -96,9 +96,7 @@ if (process.env.NODE_ENV === 'production')
 
 // Starts the server to begin listening
 // =============================================================
-// PORT 5000 for DEV Server (used to be 3000)
-// PORT 3000 for DEV React 
+// PORT 5000 for DEV Server
+// PORT 3000 for DEV Client 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, function () {
-  console.log("App listening on PORT " + PORT);
-});
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
