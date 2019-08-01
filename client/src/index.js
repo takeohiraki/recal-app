@@ -27,11 +27,11 @@ ReactDOM.render(
     domain={config.domain}
     client_id={config.clientId}
     redirect_uri={window.location.origin}
-    audience={config.audience}  
+    audience={config.audience}
     onRedirectCallback={onRedirectCallback}>
     <App />
   </Auth0Provider>,
-  document.getElementById("root")
+  document.getElementById("global")
 );
 
 // If you want your app to work offline and load faster, you can change

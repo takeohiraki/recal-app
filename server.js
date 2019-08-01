@@ -19,7 +19,7 @@ if (!authConfig.domain || !authConfig.audience) {
   );
 }
 
-app.use(morgan("dev")); 
+app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.static(join(__dirname, "build")));
 
@@ -97,10 +97,10 @@ app.use(auth_routes);*/
     // Like main.js file or main.css file! (React)
     app.use(express.static('client/build'));
 
-    // Express will serve up the index.html file 
+    // Express will serve up the index.html file
     // if the route is not recognized.
-    // If route is not part of any of the /routes 
-    // or if not found in client/build 
+    // If route is not part of any of the /routes
+    // or if not found in client/build
     // then use below:
     const path = require('path');
     app.get('*', (req, res) => {
@@ -112,6 +112,6 @@ app.use(auth_routes);*/
 // Starts the server to begin listening
 // =============================================================
 // PORT 5000 for DEV Server
-// PORT 3000 for DEV Client 
+// PORT 3000 for DEV Client
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));

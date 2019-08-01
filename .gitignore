@@ -87,3 +87,7 @@ dev.js
 
 # DynamoDB Local files
 .dynamodb/
+
+
+# Other
+.DS_Store
