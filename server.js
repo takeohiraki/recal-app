@@ -10,6 +10,7 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const { join } = require("path");
 const authConfig = require("./client/src/auth_config.json");
+const proxy = require('./client/src/setupProxy.js')
 
 const app = express();
 
