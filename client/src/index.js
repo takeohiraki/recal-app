@@ -30,7 +30,7 @@ ReactDOM.render(
     onRedirectCallback={onRedirectCallback}>
     <App />
   </Auth0Provider>,
-  document.getElementById("root")
+  document.getElementById("global")
 );
 
 serviceWorker.unregister();
