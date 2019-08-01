@@ -21,7 +21,6 @@ if (!authConfig.domain || !authConfig.audience) {
 
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(express.static(join(__dirname, "build")));
 
 // Define middleware that validates incoming bearer tokens
 // using JWKS from YOUR_DOMAIN
@@ -91,7 +90,7 @@ app.use(project_routes);
 /*var auth_routes = require("./controllers/auth_routes.js");
 app.use(auth_routes);*/
 
-/*if (process.env.NODE_ENV === 'production')
+if (process.env.NODE_ENV === 'production')
 {
     // Express will serve up production assets.
     // Like main.js file or main.css file! (React)
@@ -107,7 +106,6 @@ app.use(auth_routes);*/
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-*/
 
 // Starts the server to begin listening
 // =============================================================
