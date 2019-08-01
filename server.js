@@ -1,11 +1,50 @@
-const express = require('express');
-const app = express();
-
 // Dependencies
 // =============================================================
 var path = require("path");
-var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+
+const express = require("express");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
+const { join } = require("path");
+const authConfig = require("./client/src/auth_config.json");
+
+const app = express();
+
+if (!authConfig.domain || !authConfig.audience) {
+  throw new Error(
+    "Please make sure that auth_config.json is in place and populated"
+  );
+}
+
+app.use(morgan("dev")); 
+app.use(helmet());
+app.use(express.static(join(__dirname, "build")));
+
+// Define middleware that validates incoming bearer tokens
+// using JWKS from YOUR_DOMAIN
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
+  }),
+
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
+  algorithm: ["RS256"]
+});
+
+// Define an endpoint that must be called with an access token
+app.get("/api/external", checkJwt, (req, res) => {
+  res.send({
+    msg: "Your Access Token was successfully validated!"
+  });
+});
+
 
 // Enable data parsing
 // =============================================================
@@ -13,11 +52,6 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.send({
-      "hi": "there"
-  })
-});
 
 // Sequelize Sync
 // =============================================================
@@ -29,21 +63,6 @@ app.get('/', (req, res) => {
   .then(() => {
     console.log(`Database & tables created!`)
   });*/
-
-// Use for the Auth process with Auth0
-//app.use(cookieParser());
-
-//handlebars
-//var exphbs = require("express-handlebars");
-
-/*app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
-app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "/public/views"));*/
 
 // Routes - importing so server can access them
 // =============================================================
@@ -72,7 +91,7 @@ app.use(project_routes);
 /*var auth_routes = require("./controllers/auth_routes.js");
 app.use(auth_routes);*/
 
-if (process.env.NODE_ENV === 'production')
+/*if (process.env.NODE_ENV === 'production')
 {
     // Express will serve up production assets.
     // Like main.js file or main.css file! (React)
@@ -88,7 +107,7 @@ if (process.env.NODE_ENV === 'production')
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
+*/
 
 // Starts the server to begin listening
 // =============================================================

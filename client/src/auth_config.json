@@ -1,4 +1,5 @@
 {
     "domain": "dawn-moon-0315.auth0.com",
-    "clientId": "lcaEs7kqaLlNWUWD0uh5TTpFz3aUExbr"
+    "clientId": "lcaEs7kqaLlNWUWD0uh5TTpFz3aUExbr",
+    "audience": "https://dawn-moon-0315.auth0.com/api/v2/"
 }

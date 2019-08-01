@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 
 
@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import { useAuth0 } from "./react-auth0-spa";
+import ExternalApi from "./components/ExternalApi";
 
 // styles
 import "./App.css";
@@ -26,18 +27,19 @@ const App = () => {
   }
 
   return (
-    <Router>
+    <BrowserRouter>
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
         <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </Container>
         <Footer />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 

@@ -15,9 +15,12 @@
     "cookie-session": "^1.3.3",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
+    "express-jwt": "^5.3.1",
     "express-session": "^1.16.2",
     "googleapis": "^41.0.1",
+    "helmet": "^3.20.0",
     "http-errors": "^1.7.3",
+    "jwks-rsa": "^1.6.0",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "nodemailer": "^6.3.0",
@@ -30,9 +33,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "server": "node server.js",
+    "server:dev": "nodemon server.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
@@ -47,5 +50,6 @@
   "bugs": {
     "url": "https://github.com/takeohiraki/recal/issues"
   },
-  "homepage": "https://github.com/takeohiraki/recal#readme"
+  "homepage": "https://github.com/takeohiraki/recal#readme",
+  "proxy": "http://localhost:5000"
 }
