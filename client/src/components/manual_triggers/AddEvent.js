@@ -10,10 +10,11 @@ const SeedCal = () => {
     try {
       const token = await getTokenSilently();
       console.log('TOKEN: ' + token);
-      const response = await fetch("/api/seed/google_cal", {
+      const response = await fetch("/api/google/cal/add-event", {
         headers: {
           Authorization: `Bearer ${token}`
-        }
+        },
+        method: 'POST'
       });
 
       console.log("ran SeedCal")

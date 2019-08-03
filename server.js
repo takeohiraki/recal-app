@@ -55,6 +55,10 @@ var google_routes = require("./routes/api/google_cal.js");
 app.use(google_routes);
 
 
+var notes_routes = require("./routes/api/notes.js");
+app.use(notes_routes);
+
+
 
 
 // Enable data parsing

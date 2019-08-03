@@ -49,7 +49,7 @@ const checkJwt = jwt({
 //
 // Define an endpoint that must be called with an access token
 //
-router_google.get("/api/google_seed_experiment", checkJwt, (req, res) => {
+router_google.get("/api/seed/google_cal", checkJwt, (req, res) => {
   googleCalEventsDB.create({
     creator: "jingwen.nataly.sun@gmail.com",
     html_link:
@@ -87,7 +87,7 @@ router_google.get("/api/google_seed_experiment", checkJwt, (req, res) => {
   });
 
   res.send({
-    msg: "Database seeded"
+    msg: "Calendar seeded"
   });
 });
 
