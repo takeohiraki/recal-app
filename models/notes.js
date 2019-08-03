@@ -1,14 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const slack_message = sequelize.define('slack_message', {
+  const notes = sequelize.define('notes', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    message_text: DataTypes.STRING,
+    note_text: DataTypes.STRING,
+    note_type: DataTypes.STRING,
     user_name: DataTypes.STRING,
-    command: DataTypes.STRING,
+    user_id: DataTypes.STRING,
     slack_user_id: DataTypes.STRING,
     createdAt: {
       type: DataTypes.DATE,
@@ -19,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {});
-  slack_message.associate = function (models) {
+  notes.associate = function (models) {
     // associations can be defined here
   };
-  return slack_message;
+  return notes;
 };

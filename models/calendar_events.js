@@ -1,22 +1,25 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const google_cal_events = sequelize.define('google_cal_events', {
+  const calendar_events = sequelize.define('calendar_events', {
     id: {
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER
     },
-    creator: DataTypes.STRING,
-    html_link: DataTypes.STRING,
-    i_cal_uid: DataTypes.STRING,
     google_cal_event_id: {
       type: DataTypes.STRING,
       unique: true
     },
+    user_id: DataTypes.STRING,
+    google_cal_user_id: DataTypes.STRING,
+    creator_id: DataTypes.STRING,
+    html_link: DataTypes.STRING,
+    i_cal_uid: DataTypes.STRING,
     organizer_email: DataTypes.STRING,
     start_date: DataTypes.DATE,
     end_date: DataTypes.DATE,
-    description: DataTypes.STRING,
+    event_title: DataTypes.STRING,
+    event_description: DataTypes.STRING,
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false
@@ -25,10 +28,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    user_id: DataTypes.STRING
+    repeat_event: DataTypes.BOOLEAN,
+    repeat_event_parent_id: DataTypes.STRING
+    
   }, {});
-  google_cal_events.associate = function(models) {
+  calendar_events.associate = function(models) {
     // associations can be defined here
   };
-  return google_cal_events;
+  return calendar_events;
 };
+

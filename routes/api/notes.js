@@ -5,7 +5,7 @@ const fs = require("fs");
 var path = require("path");
 const Sequelize = require("sequelize");
 const models = require("../../models");
-const slackMessages = models.slack_message;
+const notes = models.notes;
 // const auth0_helpers = require('../middleware/auth_helpers')
 
 console.log("ran notes");
@@ -45,48 +45,37 @@ const checkJwt = jwt({
 //
 
 router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
-
   console.log("api/seed/notes");
 
-  slackMessages.create({
-    message_text: "Complete MaintMax Design",
+  notes.create({
+    note_text: "Complete MaintMax Design",
+    note_type: "/Agenda",
     user_name: "Patrice",
-    command: "/Agenda",
+    user_id: 123,
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
-  slackMessages.create({
-    message_text: "Complete Testing",
+  notes.create({
+    note_text: "Complete Testing",
+    note_type: "/Agenda",
     user_name: "Amanda",
-    command: "/Agenda",
+    user_id: 456,
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
-  slackMessages.create({
-    message_text: "Complete Data Capture",
+  notes.create({
+    note_text: "Complete Data Capture",
+    note_type: "/Agenda",
     user_name: "Darren",
-    command: "/Agenda",
+    user_id: 789,
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
-  slackMessages.create({
-    message_text: "Go Live/Launch",
+  notes.create({
+    note_text: "Go Live/Launch",
+    note_type: "/Agenda",
     user_name: "Darren",
-    command: "/Agenda",
-    slack_user_id: getRandomInt(1111111, 99999999)
-  });
-
-  slackMessages.create({
-    message_text: "Verify Functionality on Maintenance Servers",
-    user_name: "Johny",
-    command: "/Agenda",
-    slack_user_id: getRandomInt(1111111, 99999999)
-  });
-
-  slackMessages.create({
-    message_text: "Operational Acceptance",
-    user_name: "Darren",
-    command: "/Agenda",
+    user_id: 158,
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
@@ -96,10 +85,9 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
 });
 
 function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 module.exports = router_notes_api;

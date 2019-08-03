@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('slack_messages', {
+    return queryInterface.createTable('notes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,13 +11,16 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER
       },
-      message_text: {
+      note_text: {
+        type: Sequelize.STRING
+      },
+      note_type: {
         type: Sequelize.STRING
       },
       user_name: {
         type: Sequelize.STRING
       },
-      command: {
+      user_id: {
         type: Sequelize.STRING
       },
       slack_user_id: {
@@ -34,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('slack_messages');
+    return queryInterface.dropTable('notes');
   }
 };

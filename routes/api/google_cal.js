@@ -6,9 +6,7 @@ var path = require("path");
 const Sequelize = require("sequelize");
 const { google } = require("googleapis");
 const models = require("../../models");
-const googleCalEventsDB = models.google_cal_events;
-const googleCallEventNotes = models.google_cal_event_notes;
-const slackMessages = models.slack_message;
+const googleCalEventsDB = models.calendar_events;
 // const auth0_helpers = require('../middleware/auth_helpers')
 
 console.log("ran google_cal");
@@ -51,7 +49,10 @@ const checkJwt = jwt({
 //
 router_google.get("/api/seed/google_cal", checkJwt, (req, res) => {
   googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
+    google_cal_event_id: "ge1",
+    user_id: "abc",
+    google_cal_user_id: "gu1",
+    creator_id: "jingwen.nataly.sun@gmail.com",
     html_link:
       "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
     i_cal_uid: "abc",
@@ -59,31 +60,46 @@ router_google.get("/api/seed/google_cal", checkJwt, (req, res) => {
     organizer_email: "jingwen.nataly.sun@gmail.com",
     start_date: "2019-06-29 18:00:00",
     end_date: "2019-06-30 18:00:00",
-    description: "Noodle-Cal Study Day"
+    event_title: "Noodle-Cal Study Day Event 1",
+    event_description: "Noodle-Cal Study Day Description 1",
+    repeat_event: false,
+    repeat_event_parent_id: "NULL"
   });
 
   googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
+    google_cal_event_id: "ge2",
+    user_id: "def",
+    google_cal_user_id: "gu2",
+    creator_id: "tbhiraki@gmail.com",
     html_link:
       "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
     i_cal_uid: "ghi",
-    google_cal_event_id: "jki",
-    organizer_email: "jingwen.nataly.sun@gmail.com",
-    start_date: "2019-06-27 16:00:00",
-    end_date: "2019-06-27 17:00:00",
-    description: "Meeting with John"
+    google_cal_event_id: "jkl",
+    organizer_email: "tbhiraki@gmail.com",
+    start_date: "2019-07-29 18:00:00",
+    end_date: "2019-07-30 18:00:00",
+    event_title: "Noodle-Cal Study Day Event 2",
+    event_description: "Noodle-Cal Study Day Description 2",
+    repeat_event: false,
+    repeat_event_parent_id: "NULL"
   });
 
   googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
+    google_cal_event_id: "ge3",
+    user_id: "mno",
+    google_cal_user_id: "gu3",
+    creator_id: "tbhiraki@gmail.com",
     html_link:
       "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
-    i_cal_uid: "tre",
-    google_cal_event_id: "ewq",
-    organizer_email: "jingwen.nataly.sun@gmail.com",
-    start_date: "2019-06-26 18:00:00",
-    end_date: "2019-06-26 21:00:00",
-    description: "Bootcamp Class"
+    i_cal_uid: "pqr",
+    google_cal_event_id: "stu",
+    organizer_email: "test@recal.work",
+    start_date: "2019-08-29 18:00:00",
+    end_date: "2019-08-30 18:00:00",
+    event_title: "Noodle-Cal Study Day Event 3",
+    event_description: "Noodle-Cal Study Day Description 3",
+    repeat_event: false,
+    repeat_event_parent_id: "NULL"
   });
 
   res.send({

@@ -1,23 +1,29 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('google_cal_events', {
+    return queryInterface.createTable('calendar_events', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      creator: {
+      google_cal_event_id: {
+        type: Sequelize.STRING
+      },
+      user_id: {
+        type: Sequelize.STRING
+      },
+      google_cal_user_id: {
+        type: Sequelize.STRING
+      },
+      creator_id: {
         type: Sequelize.STRING
       },
       html_link: {
         type: Sequelize.STRING
       },
       i_cal_uid: {
-        type: Sequelize.STRING
-      },
-      google_cal_event_id: {
         type: Sequelize.STRING
       },
       organizer_email: {
@@ -29,7 +35,16 @@ module.exports = {
       end_date: {
         type: Sequelize.DATE
       },
-      description: {
+      event_title: {
+        type: Sequelize.STRING
+      },
+      event_description: {
+        type: Sequelize.STRING
+      },
+      repeat_event: {
+        type: Sequelize.BOOLEAN
+      },
+      repeat_event_parent_id: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -43,6 +58,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('google_cal_events');
+    return queryInterface.dropTable('calendar_events');
   }
 };
