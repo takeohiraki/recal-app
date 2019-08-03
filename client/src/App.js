@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 
-
 import PrivateRoute from "./components/PrivateRoute";
 import Loading from "./components/Loading";
 import NavBar from "./components/NavBar";
@@ -31,7 +30,7 @@ const App = () => {
     <BrowserRouter>
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
-        <Container className="flex-grow-1 mt-5">
+        <Container className="flex-grow-1 mt-5 homepageland">
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
@@ -39,6 +38,7 @@ const App = () => {
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </Container>
+        <Footer />
       </div>
     </BrowserRouter>
   );
