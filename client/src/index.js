@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "materialize-css/dist/css/materialize.min.css";
-
 import "./index.css";
 import App from "./App";
 
@@ -11,6 +9,7 @@ import { Auth0Provider } from "./react-auth0-spa";
 import config from "./auth_config.json";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "materialize-css/dist/css/materialize.min.css";
 
 // A function that routes the user to the right place
 // after login

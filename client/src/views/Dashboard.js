@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 
 import Columns from "../components/Columns/index.js";
 
-const Home = () => (
+const Dashboard= () => (
   <Fragment>
     <Columns />
   </Fragment>
 );
 
-export default Home;
+export default Dashboard;

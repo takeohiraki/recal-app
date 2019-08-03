@@ -29,3 +29,34 @@
   left: 0;
   right: 0;
 }
+
+footer {
+  padding: 10px;
+  clear: both;
+  font-size: 8px;
+  color: rgb(253, 155, 91);
+  text-align: center;
+  background-color: rgb(41,37,41);
+  opacity: 0.5;
+}
+
+.image1login,
+.image2login {
+  width: 700px;
+  height: 500px;
+  margin-top: 30px;
+  margin-left: 100px;
+}
+
+.image1login {
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.image2login {
+  position: relative;
+  bottom: 220px;
+  left: 200px;
+  z-index: 2;
+}
+
