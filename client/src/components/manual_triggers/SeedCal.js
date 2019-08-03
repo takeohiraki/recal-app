@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useAuth0 } from "../react-auth0-spa.js";
+import { useAuth0 } from "../../react-auth0-spa.js";
 
-const ExternalApi = () => {
+const SeedCal = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
@@ -10,16 +10,17 @@ const ExternalApi = () => {
     try {
       const token = await getTokenSilently();
       console.log('TOKEN: ' + token);
-      const response = await fetch("/api/external", {
+      const response = await fetch("/api/google_seed_experiment", {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
+      console.log("ran SeedCal")
       const responseData = await response.json();
 
-
       console.log(responseData)
+
       setShowResult(true);
       setApiMessage(responseData);
     } catch (error) {
@@ -29,10 +30,10 @@ const ExternalApi = () => {
 
   return (
     <>
-      <button onClick={callApi}>Ping External API</button>
+      <button onClick={callApi}>Seed Google Cal</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
     </>
   );
 };
 
-export default ExternalApi;
+export default SeedCal;

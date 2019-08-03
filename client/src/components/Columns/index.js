@@ -4,8 +4,9 @@ import { Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import contentData from "../../utils/contentData";
-import ExternalApi from "../ExternalApi.js";
-import SeedCal from "../SeedCal.js";
+import ExternalApi from "../manual_triggers/ExternalApi.js";
+import SeedCal from "../manual_triggers/SeedCal.js";
+import GetGoogleEvents from "../manual_triggers/GetGoogleEvents.js";
 
 import "./style.css";
 import API from "../../utils/API";
@@ -22,6 +23,7 @@ class Content extends Component {
       <div className="next-steps my-2">
         <ExternalApi />
         <SeedCal />
+        <GetGoogleEvents />
         <h2 className="my-5 text-center">Welcome to Recal</h2>
         <Row className="d-flex justify-content-between">
           <div className="card text-center notes-card">

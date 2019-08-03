@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth0 } from "../react-auth0-spa.js";
+import { useAuth0 } from "../../react-auth0-spa.js";
 
 const SeedCal = () => {
   const [showResult, setShowResult] = useState(false);
@@ -10,13 +10,13 @@ const SeedCal = () => {
     try {
       const token = await getTokenSilently();
       console.log('TOKEN: ' + token);
-      const response = await fetch("/api/google_seed", {
+      const response = await fetch("/api/fetch_google_calendar_events", {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      console.log("ran SeedCal")
+      console.log("ran GetGoogleEvents")
       const responseData = await response.json();
 
       console.log(responseData)
@@ -30,7 +30,7 @@ const SeedCal = () => {
 
   return (
     <>
-      <button onClick={callApi}>Seed Google Cal</button>
+      <button onClick={callApi}>Get Google Events</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
     </>
   );

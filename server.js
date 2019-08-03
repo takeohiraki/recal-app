@@ -51,51 +51,11 @@ app.get("/api/external", checkJwt, (req, res) => {
 
 
 
-app.get("/api/google_seed", checkJwt, (req, res) => {
-  console.log("ran google seed");
-  const models = require('./models');
-  const googleCalEventsDB = models.google_cal_events;
-  
+var google_routes = require("./routes/api/google_cal.js");
+app.use(google_routes);
 
-  googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
-    html_link: "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
-    i_cal_uid: "abc",
-    google_cal_event_id: "abc",
-    organizer_email: "jingwen.nataly.sun@gmail.com",
-    start_date: "2019-06-29 18:00:00",
-    end_date: "2019-06-30 18:00:00",
-    description: "Noodle-Cal Study Day"
-  });
 
-  googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
-    html_link: "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
-    i_cal_uid: "cxz",
-    google_cal_event_id: "cxz",
-    organizer_email: "jingwen.nataly.sun@gmail.com",
-    start_date: "2019-06-27 16:00:00",
-    end_date: "2019-06-27 17:00:00",
-    description: "Meeting with John"
-  });
 
-  googleCalEventsDB.create({
-    creator: "jingwen.nataly.sun@gmail.com",
-    html_link: "https://www.google.com/calendar/event?eid=XzZ0bG5hcXJsZTVwNmNwY",
-    i_cal_uid: "ewq",
-    google_cal_event_id: "ewq",
-    organizer_email: "jingwen.nataly.sun@gmail.com",
-    start_date: "2019-06-26 18:00:00",
-    end_date: "2019-06-26 21:00:00",
-    description: "Bootcamp Class"
-  });
-
-  res.send({
-    msg: "Database seeded"
-  });
-});
-
-/* app.use(routes);  */
 
 // Enable data parsing
 // =============================================================

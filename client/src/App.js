@@ -11,7 +11,7 @@ import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import { useAuth0 } from "./react-auth0-spa";
-import ExternalApi from "./components/ExternalApi";
+import ExternalApi from "./components/manual_triggers/ExternalApi";
 
 // styles
 import "./App.css";

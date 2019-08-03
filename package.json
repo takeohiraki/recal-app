@@ -36,9 +36,10 @@
     "passport": "^0.4.0",
     "passport-auth0": "^1.1.0",
     "path": "^0.12.7",
+    "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "reactstrap": "^8.0.1",
-    "sequelize": "^5.11.0",
+    "sequelize": "^5.12.2",
     "slackbots": "^1.2.0",
     "sqlite3": "^4.0.9"
   },
