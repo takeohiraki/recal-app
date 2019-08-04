@@ -6,6 +6,8 @@ var logger = require("morgan");
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const bodyParser = require("body-parser");
+
 //const routes = require("./routes");
 
 // For auth0 backend api auth
@@ -50,6 +52,8 @@ app.get("/api/external", checkJwt, (req, res) => {
 });
 
 
+app.use(bodyParser.json());
+
 
 var google_routes = require("./routes/api/google_cal.js");
 app.use(google_routes);
@@ -58,8 +62,11 @@ app.use(google_routes);
 var notes_routes = require("./routes/api/notes.js");
 app.use(notes_routes);
 
-
-
+/* 
+app.use(express.json({
+  type: ['application/json', 'text/plain']
+}))
+ */
 
 // Enable data parsing
 // =============================================================

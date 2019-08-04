@@ -40,10 +40,15 @@ const checkJwt = jwt({
   algorithm: ["RS256"]
 });
 
-//
-// Define an endpoint that must be called with an access token
-//
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+/////////////////////////
+// Seed the notes table
+/////////////////////////
 router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
   console.log("api/seed/notes");
 
@@ -51,7 +56,7 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
     note_text: "Complete MaintMax Design",
     note_type: "/Agenda",
     user_name: "Patrice",
-    user_id: 123,
+    user_id: "google-oauth2|114577142554347012839",
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
@@ -59,7 +64,7 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
     note_text: "Complete Testing",
     note_type: "/Agenda",
     user_name: "Amanda",
-    user_id: 456,
+    user_id: "google-oauth2|114577142554347012839",
     slack_user_id: getRandomInt(1111111, 99999999)
   });
 
@@ -84,10 +89,64 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
   });
 });
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+/////////////////////////
+// Get all notes for a given user
+/////////////////////////
+router_notes_api.get("/api/notes/get", checkJwt, (req, res) => {
+  console.log("api/notes/get");
+
+  notes
+    .findAll({
+      where: {
+        user_id: req.user.sub
+      },
+      order: [["createdAt", "DESC"]]
+    })
+    .then(notes => {
+      res.status(200).send(notes);
+    });
+});
+
+/////////////////////////
+// Create a note
+/////////////////////////
+router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
+  console.log("api/notes/add-note");
+
+  var newData = req.body;
+
+  const { note_text, note_type, user_name, user_id, slack_user_id } = req.body;
+
+  notes
+    .create({
+      note_text: newData.note_text,
+      note_type: newData.note_type,
+      user_name: newData.user_name,
+      user_id: newData.user_id,
+      slack_user_id: newData.slack_user_id
+    })
+    .then(newNote => {
+      res.status(201).send(newNote);
+    })
+    .catch(err => {
+      console.log("Error while creating note : ", err);
+    });
+});
+
+
+
+/* 
+router_slack.delete("/api/slack/delete-agenda", function(req, res) {
+  slackMessages
+    .destroy({
+      where: {
+        id: req.body.id
+      }
+    })
+    .then(function(affectedRows) {
+      res.sendStatus(200).send(affectedRows);
+    });
+});
+ */
 
 module.exports = router_notes_api;

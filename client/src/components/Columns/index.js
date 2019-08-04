@@ -7,8 +7,8 @@ import contentData from "../../utils/contentData";
 import ExternalApi from "../manual_triggers/ExternalApi.js";
 import SeedCal from "../manual_triggers/SeedCal.js";
 import SeedNotes from "../manual_triggers/SeedNotes.js";
-import GetGoogleEvents from "../manual_triggers/GetGoogleEvents.js";
-import AddNote from "../manual_triggers/GetGoogleEvents.js";
+import GetNotes from "../manual_triggers/GetNotes.js";
+import AddNote from "../manual_triggers/AddNote.js";
 
 import "./style.css";
 import API from "../../utils/API";
@@ -26,6 +26,8 @@ class Content extends Component {
         <ExternalApi />
         <SeedCal />
         <SeedNotes />
+        <GetNotes />
+        <AddNote />
         <h2 className="my-5 text-center">Welcome to Recal</h2>
         <Row className="d-flex justify-content-between">
           <div className="card text-center notes-card">

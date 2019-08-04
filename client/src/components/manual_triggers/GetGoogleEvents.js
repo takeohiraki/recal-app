@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa.js";
 
-const SeedCal = () => {
+const GetGoogleEvents = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
@@ -36,4 +36,4 @@ const SeedCal = () => {
   );
 };
 
-export default SeedCal;
+export default GetGoogleEvents;

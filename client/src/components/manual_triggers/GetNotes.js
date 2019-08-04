@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa.js";
 
-const AddEvent = () => {
+const SeedCal = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
@@ -10,14 +10,13 @@ const AddEvent = () => {
     try {
       const token = await getTokenSilently();
       console.log('TOKEN: ' + token);
-      const response = await fetch("/api/google/cal/add-event", {
+      const response = await fetch("/api/notes/get", {
         headers: {
           Authorization: `Bearer ${token}`
-        },
-        method: 'POST'
+        }
       });
 
-      console.log("ran SeedCal")
+      console.log("ran GetNotes")
       const responseData = await response.json();
 
       console.log(responseData)
@@ -31,10 +30,10 @@ const AddEvent = () => {
 
   return (
     <>
-      <button onClick={callApi}>Adding an event</button>
+      <button onClick={callApi}>Get All Notes</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
     </>
   );
 };
 
-export default AddEvent;
+export default SeedCal;
