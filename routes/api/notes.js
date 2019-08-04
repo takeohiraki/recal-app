@@ -129,7 +129,7 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
       res.status(201).send(newNote);
     })
     .catch(err => {
-      console.log("Error while creating note : ", err);
+      console.log("Error while creating note: ", err);
     });
 });
 

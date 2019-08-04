@@ -1,12 +1,14 @@
-/* import axios from "axios";
+import axios from "axios";
+import { useAuth0 } from "../react-auth0-spa.js";
+
 
 export default {
   googleSeed: function() {
     return axios.get("/api/google/seed");
   },
   // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
+  getNotes: async function(id) {
+
   },
   // Deletes the book with the given id
   deleteBook: function(id) {
@@ -17,4 +19,27 @@ export default {
     return axios.post("/api/books", bookData);
   }
 };
- */
+
+
+/* 
+loadNotes = async () => {
+    try {
+      const token = await getTokenSilently();
+      console.log('TOKEN: ' + token);
+      const response = await fetch("/api/notes/get", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      console.log("ran GetNotes")
+      const responseData = await response.json();
+
+      console.log(responseData)
+
+      setShowResult(true);
+      setApiMessage(responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  }; */

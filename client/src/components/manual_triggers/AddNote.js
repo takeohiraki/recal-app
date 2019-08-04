@@ -8,51 +8,6 @@ let exampleData = {
   user_id: "google-oauth2|114577142554347012839",
   slack_user_id: 123456
 };
-/* 
-const AddNote = () => {
-  const [showResult, setShowResult] = useState(false);
-  const [apiMessage, setApiMessage] = useState("");
-  const { getTokenSilently } = useAuth0();
-
-  const callApi = async () => {
-    try {
-      const token = await getTokenSilently();
-      console.log("TOKEN: " + token);
-      const response = await fetch("/api/notes/add-note", {
-        // method: 'GET',
-        // mode: 'cors',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': "application/json"
-        },
-        // body: JSON.stringify(exampleData)
-      });
-
-      console.log("ran add note");
-      console.log(exampleData);
-
-      const responseData = await response.json();
-
-      console.log(responseData);
-
-      setShowResult(true);
-      setApiMessage(responseData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <>
-      <button onClick={callApi}>Add Note</button>
-      {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
-    </>
-  );
-};
-
-export default AddNote;
- */
-
  
 const AddNote = () => {
   const [showResult, setShowResult] = useState(false);
@@ -89,7 +44,7 @@ const AddNote = () => {
 
   return (
     <>
-      <button onClick={callApi}>Ran add note</button>
+      <button onClick={callApi}>Add note</button>
       {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
     </>
   );

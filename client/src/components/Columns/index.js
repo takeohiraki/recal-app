@@ -2,23 +2,40 @@ import React, { Component } from "react";
 
 import { Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Jumbotron, List, ListItem } from "bootstrap/dist/css/bootstrap.css";
 
 import contentData from "../../utils/contentData";
 import ExternalApi from "../manual_triggers/ExternalApi.js";
 import SeedCal from "../manual_triggers/SeedCal.js";
 import SeedNotes from "../manual_triggers/SeedNotes.js";
 import GetNotes from "../manual_triggers/GetNotes.js";
+import GetNotesManual from "../manual_triggers/GetNotesManual.js";
 import AddNote from "../manual_triggers/AddNote.js";
 
 import "./style.css";
 import API from "../../utils/API";
 
+
 class Content extends Component {
-  seedGoogle = () => {
+  /*   state = {
+    notes: []
+  }; */
+
+  /*   componentDidMount() {
+    this.getNotes();
+  } */
+
+  /*   getNotes = () => {
+    API.getNotes()
+      .then(res => this.setState({ notes: res.data }))
+      .catch(err => console.log(err));
+  }; */
+
+  /*  seedGoogle = () => {
     API.seedGoogle()
       .then(res => console.log("seeded"))
       .catch(err => console.log(err));
-  };
+  }; */
 
   render() {
     return (
@@ -26,14 +43,15 @@ class Content extends Component {
         <ExternalApi />
         <SeedCal />
         <SeedNotes />
-        <GetNotes />
+        <GetNotesManual />
         <AddNote />
-        <h2 className="my-5 text-center">Welcome to Recal</h2>
+        <h2 className="my-5 text-center">Recal</h2>
         <Row className="d-flex justify-content-between">
           <div className="card text-center notes-card">
             <div className="card-header">
-              {/* > notes/note-block */} Notes <p> Notes Example</p>
+              Notes 
             </div>
+            <GetNotes />
           </div>
 
           <div className="card text-center event-project-card">
