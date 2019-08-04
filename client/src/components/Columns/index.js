@@ -45,18 +45,18 @@ class Content extends Component {
         <SeedNotes />
         <GetNotesManual />
         <AddNote />
-        <h2 className="my-5 text-center">Recal</h2>
+        {/* <h2 className="my-5 text-center">Recal</h2> */}
         <Row className="d-flex justify-content-between">
           <div className="card text-center notes-card">
             <div className="card-header">
-              Notes 
+              <h5><strong>Notes</strong></h5>
             </div>
             <GetNotes />
           </div>
 
           <div className="card text-center event-project-card">
             <div className="card-header">
-              {/* > google/calendar-block  */} Events / Project
+              {/* > google/calendar-block  */} <h5><strong>Events / Project</strong></h5>
             </div>
           </div>
         </Row>

@@ -53,6 +53,10 @@ app.get("/api/external", checkJwt, (req, res) => {
 
 
 app.use(bodyParser.json());
+/* app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors()); */
+
+
 
 
 var google_routes = require("./routes/api/google_cal.js");

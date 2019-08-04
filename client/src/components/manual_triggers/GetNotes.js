@@ -37,14 +37,13 @@ const GetNotes = () => {
 
       {showResult && (
         <code>
-          <ul>
-            {Array.from(apiMessage).map(notes => (
-              <li key={notes.id}>
-                {/* <strong>{notes.note_text} by {notes.user_id}</strong> */}
-                <strong>{notes.note_text}}</strong>
-              </li>
-            ))}
-          </ul>
+          {Array.from(apiMessage).map(notes => (
+            <div className="card text-center" key={notes.id}>
+              <div className="card-header">
+                <p>{notes.note_text}</p>
+              </div>
+            </div>
+          ))}
         </code>
       )}
     </>
