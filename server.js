@@ -7,14 +7,16 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
-
+const axios = require('axios');
 //const routes = require("./routes");
 
 // For auth0 backend api auth
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 
-const { join } = require("path");
+const {
+  join
+} = require("path");
 const authConfig = require("./client/src/auth_config.json");
 const proxy = require("./client/src/setupProxy.js");
 
@@ -44,20 +46,31 @@ const checkJwt = jwt({
   algorithm: ["RS256"]
 });
 
-// Define an endpoint that must be called with an access token
-app.get("/api/external", checkJwt, (req, res) => {
-  res.send({
-    msg: "Your Access Token was successfully validated!"
-  });
-});
+const jwtAuthz = require('express-jwt-authz');
 
+// Define an endpoint that must be called with an access token
+app.get("/api/external", checkJwt, jwtAuthz(['openid', 'profile', 'email']), (req, res) => {
+
+  axios.get('https://dawn-moon-0315.auth0.com/userinfo',
+   { headers: {"Authorization" : req.headers.authorization } })
+    .then(function (response) {
+      
+      console.log(response);
+      let user_identities_json = response.data["http://www.recal.com/user_identities"];
+      let user_identities = JSON.parse(user_identities_json);
+      let google_access_token = user_identities[0].access_token;
+      console.log("GOOGLE ACCESS TOKEN: " + google_access_token);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+});
 
 app.use(bodyParser.json());
 /* app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors()); */
-
-
-
 
 var google_routes = require("./routes/api/google_cal.js");
 app.use(google_routes);
