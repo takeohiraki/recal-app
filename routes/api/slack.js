@@ -3,7 +3,7 @@ var router_slack = express.Router();
 var passport = require('passport');
 
 // Import the model to use its database functions.
-const models = require('../models');
+const models = require("../../models");
 const notes = models.notes;
 //var model_slack = require("../models/model_slack.js");
 
