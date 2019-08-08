@@ -64,6 +64,10 @@ app.use(google_routes);
 var notes_routes = require("./routes/api/notes.js");
 app.use(notes_routes);
 
+var slack_routes = require("./routes/api/slack.js");
+app.use(slack_routes);
+
+
 /* 
 app.use(express.json({
   type: ['application/json', 'text/plain']
@@ -99,8 +103,8 @@ models.sequelize.sync({
 app.use(routes_main);*/
 
 // Routes for handling Slack data
-var slack_routes = require("./controllers/slack_routes.js");
-app.use(slack_routes);
+/* var slack_routes = require("./controllers/slack_routes.js");
+app.use(slack_routes); */
 
 // Routes for handling Google data
 /* var google_routes = require("./controllers/google_routes.js");
