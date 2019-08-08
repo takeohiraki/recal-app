@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa.js";
 
-const GetGoogleEvents = () => {
+const GetEvents = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
@@ -30,10 +30,22 @@ const GetGoogleEvents = () => {
 
   return (
     <>
-      <button onClick={callApi}>Get Google Events</button>
-      {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
+      <button onClick={callApi}>Get Events</button>
+
+      {showResult && (
+        <code>
+          {Array.from(apiMessage).map(events => (
+            <div className="card text-center" key={events.google_cal_event_id}>
+              <div className="card-header">
+                <p>{events.event_title}</p>
+                <p>{events.event_start}</p>
+              </div>
+            </div>
+          ))}
+        </code>
+      )}
     </>
   );
 };
 
-export default GetGoogleEvents;
+export default GetEvents;

@@ -51,7 +51,7 @@ const {
   google
 } = require("googleapis");
 const keys = require('./config/keys');
-
+/* 
 // Define an endpoint that must be called with an access token
 app.get("/api/external", checkJwt, jwtAuthz(['openid', 'profile', 'email']), (req, res) => {
 
@@ -62,7 +62,8 @@ app.get("/api/external", checkJwt, jwtAuthz(['openid', 'profile', 'email']), (re
     })
     .then(function (response) {
 
-      console.log(response);
+      // console.log(response);
+      console.log(response.attendees);
       let user_identities_json = response.data["http://www.recal.com/user_identities"];
       let user_identities = JSON.parse(user_identities_json);
       let google_access_token = user_identities[0].access_token;
@@ -134,7 +135,7 @@ function listEvents(auth) {
     );
   });
 }
-
+ */
 
 app.use(bodyParser.json());
 /* app.use(bodyParser.urlencoded({ extended: true }));
@@ -164,14 +165,15 @@ app.use(express.json());
 
 // Sequelize Sync
 // =============================================================
-const models = require("./models");
+/* const models = require("./models");
 models.sequelize.sync({
     force: false
+    // force: true
     // force set to true would drop and recreate the tables.
   })
   .then(() => {
     console.log(`Database & tables created!`)
-  });
+  }); */
 
 // Routes - importing so server can access them
 // =============================================================

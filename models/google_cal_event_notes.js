@@ -1,6 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const google_cal_event_notes = sequelize.define('google_cal_event_notes', {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER
+    },
     event_id: {
       type: DataTypes.INTEGER,
       primaryKey: true

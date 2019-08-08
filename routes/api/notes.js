@@ -69,6 +69,14 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
   });
 
   notes.create({
+    note_text: "Try auth0",
+    note_type: "/Agenda",
+    user_name: "Jerry",
+    user_id: "google-oauth2|114577142554347012839",
+    slack_user_id: getRandomInt(1111111, 99999999)
+  });
+
+  notes.create({
     note_text: "Complete Data Capture",
     note_type: "/Agenda",
     user_name: "Darren",
