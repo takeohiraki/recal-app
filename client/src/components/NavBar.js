@@ -46,10 +46,7 @@ const NavBar = () => {
                   exact
                   activeClassName="router-link-exact-active"
                 >
-                   <img
-                      src={logo}
-                      alt="Recal"
-                      width="100"/>
+                  <img src={logo} alt="Recal" width="100" />
                 </NavLink>
               </NavItem>
               {isAuthenticated && (
@@ -83,7 +80,14 @@ const NavBar = () => {
                   <Button
                     id="qsLoginBtn"
                     class="waves-effect waves-light btn"
-                    onClick={() => loginWithRedirect({})}
+                    onClick={() =>
+                      loginWithRedirect({
+                        access_type: "offline",
+                        // Reminder: may need to add more scopes
+                        // connection_scope: "https://www.googleapis.com/auth/calendar.events.readonly",
+                        approval_prompt: "force"
+                      })
+                    }
                   >
                     Log in
                   </Button>

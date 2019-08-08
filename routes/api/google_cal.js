@@ -155,51 +155,15 @@ router_google.get("/api/seed/google_cal", checkJwt, (req, res) => {
 //////////////////////////////////////////////////
 // pulls calendar events for a valid session
 //////////////////////////////////////////////////
-/* router_google.get("/api/fetch_google_calendar_events", (req, res) => {
-  var googleRefreshToken = req.body.googleRefreshToken;
-  console.log(
-    "google refresh token in api/google/calendar/events: " + googleRefreshToken
-  );
-
-  fs.readFile(
-    path.join(__dirname, "..", "helpers/oauth_google/credentials.json"),
-    (err, content) => {
-      //fs.readFile('../helpers/oauth_google/credentials.json', (err, content) => {
-
-      if (err) return console.log("Error loading client secret file:", err);
-      // Authorize a client with credentials, then call the Google Calendar API.
-      var credentials = JSON.parse(content);
-      const { client_secret, client_id, redirect_uris } = credentials.web;
-      const oAuth2Client = new google.auth.OAuth2(
-        client_id,
-        client_secret,
-        redirect_uris[0]
-      );
-
-      oAuth2Client.setCredentials({
-        refresh_token: googleRefreshToken
-      });
-
-      // first pulls google calendar events
-      listEvents(oAuth2Client)
-        // then takes the events, grabs their ids and puts them into an array
-        .then(resolvedData => {
-          return createUpdateGcalDB(resolvedData, req);
-        })
-        // displays next 10 meetings
-        .then(() => {
-          return pullNext10(res);
-        });
-    }
-  );
-});
- */
-
-router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["openid", "profile", "email"]), (req, res) => {
+router_google.get(
+  "/api/fetch_google_calendar_events",
+  checkJwt,
+  jwtAuthz(["openid", "profile", "email"]),
+  (req, res) => {
     console.log("api/fetch_google_calendar_events");
 
     // grab user_id
-    // may need to add logic here if there is no user_id, since it may indicate the user isn't auth'd
+    // Reminder: may need to add logic here if there is no user_id, since it may indicate the user isn't auth'd
     console.log(req.user.sub);
     let user_id = req.user.sub;
 
@@ -214,7 +178,9 @@ router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["open
           response.data["http://www.recal.com/user_identities"];
         let user_identities = JSON.parse(user_identities_json);
         let google_access_token = user_identities[0].access_token;
+        let google_refresh_token = user_identities[0].refresh_token;
         console.log("GOOGLE ACCESS TOKEN: " + google_access_token);
+        console.log("GOOGLE REFRESH TOKEN: " + google_refresh_token);
         console.log(user_identities);
 
         const oAuth2Client = new google.auth.OAuth2(
@@ -224,7 +190,10 @@ router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["open
         );
 
         oAuth2Client.setCredentials({
-          access_token: google_access_token
+          // Reminder: Not sure if this auto-uses refresh token if access token is expired
+          // Also we grab a new refresh token each time they login
+          access_token: google_access_token,
+          refresh_token: google_refresh_token
         });
 
         // first pulls google calendar events
@@ -248,6 +217,10 @@ router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["open
   }
 );
 
+//////////////////////////////////////////////////
+// Helper functions for pulling, writing, and displaying events
+//////////////////////////////////////////////////
+// Reminder: Move this somewhere else (helper file?)
 let googleCalMethods = {
   // Pull events from DB
   displayEvents: function(res, user_id) {
@@ -322,6 +295,7 @@ let googleCalMethods = {
           event_start_tz: element.start.timeZone || null,
           event_end: element.end.dateTime,
           event_end_tz: element.end.timeZone || null,
+          // Reminder: not using these fields
           // event_original_start: element.originalStartTime.dateTime || null,
           // event_original_tz: element.originalStartTime.timeZone || null,
           event_created_at: element.created,
@@ -330,7 +304,7 @@ let googleCalMethods = {
       });
       googleCalEventsDB
         .bulkCreate(gCalArr, {
-          // I suspect that this is not updating events
+          // Reminder: I suspect that this is not updating events
           updateOnDuplicate: ["google_cal_event_id"]
         })
         .then(([affectedCount, affectedRows]) => {

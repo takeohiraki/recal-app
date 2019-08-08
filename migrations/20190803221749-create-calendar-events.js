@@ -3,57 +3,68 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('calendar_events', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true,
+        type: DataTypes.INTEGER
       },
       google_cal_event_id: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        unique: true
       },
-      user_id: {
-        type: Sequelize.STRING
+      recurring_event_id: {
+        type: DataTypes.STRING,
+        allowNull: true
       },
-      google_cal_user_id: {
-        type: Sequelize.STRING
-      },
-      creator_id: {
-        type: Sequelize.STRING
-      },
-      html_link: {
-        type: Sequelize.STRING
-      },
-      i_cal_uid: {
-        type: Sequelize.STRING
-      },
-      organizer_email: {
-        type: Sequelize.STRING
-      },
-      start_date: {
-        type: Sequelize.DATE
-      },
-      end_date: {
-        type: Sequelize.DATE
-      },
-      event_title: {
-        type: Sequelize.STRING
-      },
+      calendar_owner_user_id: DataTypes.STRING,
+      status: DataTypes.STRING,
+      creator_email: DataTypes.STRING,
+      is_creator: DataTypes.BOOLEAN,
+      organizer_email: DataTypes.STRING,
+      is_organizer: DataTypes.BOOLEAN,
+      event_title: DataTypes.STRING,
       event_description: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
-      repeat_event: {
-        type: Sequelize.BOOLEAN
+      hangoutLink: {
+        type: DataTypes.STRING,
+        allowNull: true
       },
-      repeat_event_parent_id: {
-        type: Sequelize.STRING
+      event_start: {
+        type: 'TIMESTAMP'
+      },
+      event_start_tz: {
+        type: 'TIMESTAMP',
+        allowNull: true
+      },
+      event_end: {
+        type: 'TIMESTAMP'
+      },
+      event_end_tz: {
+        type: 'TIMESTAMP',
+        allowNull: true
+      },
+      event_original_start: {
+        type: 'TIMESTAMP',
+        allowNull: true
+      },
+      event_original_tz: {
+        type: 'TIMESTAMP',
+        allowNull: true
+      },
+      event_created_at: {
+        type: 'TIMESTAMP'
+      },
+      event_updated_at: {
+        type: 'TIMESTAMP'
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE,
+        allowNull: false
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE,
+        allowNull: false
       }
     });
   },
