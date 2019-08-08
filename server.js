@@ -164,14 +164,14 @@ app.use(express.json());
 
 // Sequelize Sync
 // =============================================================
-//const models = require("./models");
-/*models.sequelize.sync({
+const models = require("./models");
+models.sequelize.sync({
     force: false
     // force set to true would drop and recreate the tables.
   })
   .then(() => {
     console.log(`Database & tables created!`)
-  });*/
+  });
 
 // Routes - importing so server can access them
 // =============================================================
