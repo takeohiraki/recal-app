@@ -43,7 +43,7 @@ router_slack.get('/slack-session', (req, res) => {
 
 
 // Basic route that sends the user first to the AJAX Page
-router_slack.post("/api/slack/add-agenda", function (req, res) {
+router_slack.post("/api/slack-add-agenda", function (req, res) {
   console.log("agenda attempted")
   var newData = req.body;
   const {
