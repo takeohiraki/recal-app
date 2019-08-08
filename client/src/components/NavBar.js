@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../assets/dark.png";
 
 import {
   Collapse,
@@ -45,7 +46,10 @@ const NavBar = () => {
                   exact
                   activeClassName="router-link-exact-active"
                 >
-                  <strong>Recal</strong>
+                   <img
+                      src={logo}
+                      alt="Recal"
+                      width="100"/>
                 </NavLink>
               </NavItem>
               {isAuthenticated && (
