@@ -42,21 +42,26 @@ footer {
 
 .image1login,
 .image2login {
-  width: 700px;
+  width: 600px;
   height: 500px;
-  margin-top: 30px;
-  margin-left: 100px;
+  border: 3px solid rgb(196, 196, 196);
 }
 
 .image1login {
-  opacity: 0.8;
+  opacity: 0.6;
+  margin-top: 30px;
   z-index: 1;
 }
 
 .image2login {
   position: relative;
-  bottom: 220px;
+  bottom: 250px;
   left: 200px;
   z-index: 2;
+  opacity: 0.8;
+}
+
+.greycolor {
+  background-color: black;
 }
 
