@@ -19,7 +19,9 @@ const onRedirectCallback = appState => {
     document.title,
     appState && appState.targetUrl
       ? appState.targetUrl
-      : window.location.pathname
+      // Changing redirect location after login to /dashboard
+      // : window.location.pathname <--- original config
+      : "/dashboard"
   );
 };
 
