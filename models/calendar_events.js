@@ -10,16 +10,53 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    user_id: DataTypes.STRING,
-    google_cal_user_id: DataTypes.STRING,
-    creator_id: DataTypes.STRING,
-    html_link: DataTypes.STRING,
-    i_cal_uid: DataTypes.STRING,
+    recurring_event_id: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    calendar_owner_user_id: DataTypes.STRING,
+    status: DataTypes.STRING,
+    creator_email: DataTypes.STRING,
+    is_creator: DataTypes.BOOLEAN,
     organizer_email: DataTypes.STRING,
-    start_date: DataTypes.DATE,
-    end_date: DataTypes.DATE,
+    is_organizer: DataTypes.BOOLEAN,
     event_title: DataTypes.STRING,
-    event_description: DataTypes.STRING,
+    event_description: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    hangoutLink: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    event_start: {
+      type: 'TIMESTAMP'
+    },
+    event_start_tz: {
+      type: 'TIMESTAMP',
+      allowNull: true
+    },
+    event_end: {
+      type: 'TIMESTAMP'
+    },
+    event_end_tz: {
+      type: 'TIMESTAMP',
+      allowNull: true
+    },
+    event_original_start: {
+      type: 'TIMESTAMP',
+      allowNull: true
+    },
+    event_original_tz: {
+      type: 'TIMESTAMP',
+      allowNull: true
+    },
+    event_created_at: {
+      type: 'TIMESTAMP'
+    },
+    event_updated_at: {
+      type: 'TIMESTAMP'
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false
@@ -27,10 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
-    },
-    repeat_event: DataTypes.BOOLEAN,
-    repeat_event_parent_id: DataTypes.STRING
-    
+    }
   }, {});
   calendar_events.associate = function(models) {
     // associations can be defined here

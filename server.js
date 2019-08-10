@@ -52,89 +52,6 @@ const {
 } = require("googleapis");
 const keys = require('./config/keys');
 
-// Define an endpoint that must be called with an access token
-app.get("/api/external", checkJwt, jwtAuthz(['openid', 'profile', 'email']), (req, res) => {
-
-  axios.get('https://dawn-moon-0315.auth0.com/userinfo', {
-      headers: {
-        "Authorization": req.headers.authorization
-      }
-    })
-    .then(function (response) {
-
-      console.log(response);
-      let user_identities_json = response.data["http://www.recal.com/user_identities"];
-      let user_identities = JSON.parse(user_identities_json);
-      let google_access_token = user_identities[0].access_token;
-      console.log("GOOGLE ACCESS TOKEN: " + google_access_token);
-
-      var googleRefreshToken = google_access_token;
-      console.log(
-        "google refresh token in api/google/calendar/events: " + googleRefreshToken
-      );
-    
-      const oAuth2Client = new google.auth.OAuth2(
-        keys.googleClient,
-        keys.googleSecret,
-        'http://localhost:3000/auth/google/callback'
-      );
-
-      oAuth2Client.setCredentials({
-        access_token: googleRefreshToken
-      });
-
-      // first pulls google calendar events
-      listEvents(oAuth2Client)
-        // then takes the events, grabs their ids and puts them into an array
-        .then(resolvedData => {
-          console.log(resolvedData);
-        })
-        // displays next 10 meetings
-        .then(() => {
-          return pullNext10(res);
-        });
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-});
-
-function listEvents(auth) {
-  console.log("run list events");
-  return new Promise(function(resolve, reject) {
-    const calendar = google.calendar({
-      version: "v3",
-      auth
-    });
-    calendar.events.list(
-      {
-        calendarId: "primary",
-        // timeMin: (new Date()).toISOString(),
-        timeMin: new Date().toISOString(),
-        maxResults: 10,
-        singleEvents: true,
-        orderBy: "startTime"
-      },
-      (err, res) => {
-        if (err) return console.log("The API returned an error: " + err);
-        const events = res.data.items;
-
-        console.log(events);
-        // console.log(new Date().toISOString())
-
-        if (events.length) {
-          resolve(events);
-        } else {
-          console.log("No upcoming events found.");
-          reject("No upcoming events found.");
-        }
-      }
-    );
-  });
-}
-
 
 app.use(bodyParser.json());
 /* app.use(bodyParser.urlencoded({ extended: true }));
@@ -146,6 +63,10 @@ app.use(google_routes);
 
 var notes_routes = require("./routes/api/notes.js");
 app.use(notes_routes);
+
+var slack_routes = require("./routes/api/slack.js");
+app.use(slack_routes);
+
 
 /* 
 app.use(express.json({
@@ -164,14 +85,15 @@ app.use(express.json());
 
 // Sequelize Sync
 // =============================================================
-const models = require("./models");
+/* const models = require("./models");
 models.sequelize.sync({
     force: false
+    // force: true
     // force set to true would drop and recreate the tables.
   })
   .then(() => {
     console.log(`Database & tables created!`)
-  });
+  }); */
 
 // Routes - importing so server can access them
 // =============================================================
@@ -181,8 +103,8 @@ models.sequelize.sync({
 app.use(routes_main);*/
 
 // Routes for handling Slack data
-var slack_routes = require("./controllers/slack_routes.js");
-app.use(slack_routes);
+/* var slack_routes = require("./controllers/slack_routes.js");
+app.use(slack_routes); */
 
 // Routes for handling Google data
 /* var google_routes = require("./controllers/google_routes.js");

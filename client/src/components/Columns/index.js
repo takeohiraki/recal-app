@@ -11,6 +11,7 @@ import SeedNotes from "../manual_triggers/SeedNotes.js";
 import GetNotes from "../manual_triggers/GetNotes.js";
 import GetNotesManual from "../manual_triggers/GetNotesManual.js";
 import AddNote from "../manual_triggers/AddNote.js";
+import GetEvents from "../manual_triggers/GetEvents.js";
 
 import "./style.css";
 import API from "../../utils/API";
@@ -43,8 +44,9 @@ class Content extends Component {
         <ExternalApi />
         <SeedCal />
         <SeedNotes />
-        <GetNotesManual />
+        {/* <GetNotesManual /> */}
         <AddNote />
+        {/* <GetGoogleEvents /> */}
         {/* <h2 className="my-5 text-center">Recal</h2> */}
         <Row className="d-flex justify-content-between">
           <div className="card text-center notes-card">
@@ -56,8 +58,9 @@ class Content extends Component {
 
           <div className="card text-center event-project-card">
             <div className="card-header">
-              {/* > google/calendar-block  */} <h5><strong>Events / Project</strong></h5>
+              <h5><strong>Events / Project</strong></h5>
             </div>
+            <GetEvents />
           </div>
         </Row>
       </div>

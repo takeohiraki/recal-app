@@ -52,7 +52,7 @@ function getRandomInt(min, max) {
 router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
   console.log("api/seed/notes");
 
-  notes.create({
+  /*   notes.create({
     note_text: "Complete MaintMax Design",
     note_type: "/Agenda",
     user_name: "Patrice",
@@ -64,6 +64,14 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
     note_text: "Complete Testing",
     note_type: "/Agenda",
     user_name: "Amanda",
+    user_id: "google-oauth2|114577142554347012839",
+    slack_user_id: getRandomInt(1111111, 99999999)
+  });
+
+  notes.create({
+    note_text: "Try auth0",
+    note_type: "/Agenda",
+    user_name: "Jerry",
     user_id: "google-oauth2|114577142554347012839",
     slack_user_id: getRandomInt(1111111, 99999999)
   });
@@ -82,7 +90,57 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
     user_name: "Darren",
     user_id: 158,
     slack_user_id: getRandomInt(1111111, 99999999)
-  });
+  }); */
+
+  var notesSeed = [
+    {
+      note_text: "Complete MaintMax Design",
+      note_type: "/Agenda",
+      user_name: "Patrice",
+      user_id: "google-oauth2|114577142554347012839",
+      slack_user_id: getRandomInt(1111111, 99999999)
+    },
+    {
+      note_text: "Complete Testing",
+      note_type: "/Agenda",
+      user_name: "Amanda",
+      user_id: "google-oauth2|114577142554347012839",
+      slack_user_id: getRandomInt(1111111, 99999999)
+    },
+    {
+      note_text: "Try auth0",
+      note_type: "/Agenda",
+      user_name: "Jerry",
+      user_id: "google-oauth2|114577142554347012839",
+      slack_user_id: getRandomInt(1111111, 99999999)
+    },
+    {
+      note_text: "Complete Data Capture",
+      note_type: "/Agenda",
+      user_name: "Darren",
+      user_id: 789,
+      slack_user_id: getRandomInt(1111111, 99999999)
+    },
+    {
+      note_text: "Go Live/Launch",
+      note_type: "/Agenda",
+      user_name: "Darren",
+      user_id: 158,
+      slack_user_id: getRandomInt(1111111, 99999999)
+    }
+  ];
+
+  notes
+    .bulkCreate(notesSeed, {
+      updateOnDuplicate: ["id"]
+    })
+    .then(([affectedCount, affectedRows]) => {
+      resolve(affectedCount);
+    })
+    // Reminder: get this to work
+/*     .catch(function(error) {
+      console.error(data);
+    }); */
 
   res.send({
     msg: "Notes seeded"
@@ -132,8 +190,6 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
       console.log("Error while creating note: ", err);
     });
 });
-
-
 
 /* 
 router_slack.delete("/api/slack/delete-agenda", function(req, res) {
