@@ -50,26 +50,34 @@ const NavBar = () => {
                 </NavLink>
               </NavItem>
               {isAuthenticated && (
-                <NavItem>
+                <NavItem
+                  className="greenbtnmargin"
+                >
                   <NavLink
                     tag={RouterNavLink}
                     to="/external-api"
                     exact
                     activeClassName="router-link-exact-active"
+                    id="qsLoginBtn"
+                    class="waves-effect waves-light btn"
                   >
-                    External API
+                    <p id="smallerfontgreenbtn">External API</p>
                   </NavLink>
                 </NavItem>
               )}
               {isAuthenticated && (
-                <NavItem>
+                <NavItem
+                  className="greenbtnmargin"
+                >
                   <NavLink
                     tag={RouterNavLink}
                     to="/dashboard"
                     exact
                     activeClassName="router-link-exact-active"
+                    id="qsLoginBtn"
+                    class="waves-effect waves-light btn"
                   >
-                    Dashboard
+                    <p id="smallerfontgreenbtn">Dashboard</p>
                   </NavLink>
                 </NavItem>
               )}
@@ -129,7 +137,7 @@ const NavBar = () => {
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-                    color="primary"
+                    class="waves-effect waves-light btn"
                     block
                     onClick={() => loginWithRedirect({})}
                   >
@@ -152,7 +160,10 @@ const NavBar = () => {
                       className="nav-user-profile d-inline-block rounded-circle mr-3"
                       width="50"
                     />
-                    <h6 className="d-inline-block">{user.name}</h6>
+                    <h6 
+                      className="d-inline-block username"
+                      style={{ textcolor: "rgb(253, 155, 91)" }}
+                    >{user.name}</h6>
                   </span>
                 </NavItem>
                 <NavItem>

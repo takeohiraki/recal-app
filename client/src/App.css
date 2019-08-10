@@ -30,25 +30,15 @@
   right: 0;
 }
 
-footer {
-  padding: 10px;
-  clear: both;
-  font-size: 8px;
-  color: rgb(253, 155, 91);
-  text-align: center;
-  background-color: rgb(41,37,41);
-  opacity: 0.5;
-}
-
 .image1login,
 .image2login {
   width: 600px;
   height: 500px;
-  border: 3px solid rgb(196, 196, 196);
+  border: 2px solid rgb(196, 196, 196);
 }
 
 .image1login {
-  opacity: 0.6;
+  opacity: 0.7;
   margin-top: 30px;
   z-index: 1;
 }
@@ -58,10 +48,13 @@ footer {
   bottom: 250px;
   left: 200px;
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
-.greycolor {
-  background-color: black;
+.greenbtnmargin {
+  margin-top: 10px;
 }
 
+#smallerfontgreenbtn {
+  font-size: 10px;
+}
