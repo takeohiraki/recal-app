@@ -46,6 +46,12 @@ const checkJwt = jwt({
   algorithm: ["RS256"]
 });
 
+app.get('/IsServerUp', (req, res) => {
+  return res.send({
+    Server: "Up"
+  });
+})
+
 const jwtAuthz = require('express-jwt-authz');
 const {
   google

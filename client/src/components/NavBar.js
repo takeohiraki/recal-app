@@ -59,7 +59,7 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                   >
                     <p id="smallerfontgreenbtn">External API</p>
                   </NavLink>
@@ -75,7 +75,7 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                   >
                     <p id="smallerfontgreenbtn">Dashboard</p>
                   </NavLink>
@@ -87,7 +87,7 @@ const NavBar = () => {
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                     onClick={() =>
                       loginWithRedirect({
                         access_type: "offline",
@@ -137,7 +137,7 @@ const NavBar = () => {
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                     block
                     onClick={() => loginWithRedirect({})}
                   >
