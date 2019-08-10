@@ -46,33 +46,38 @@ const NavBar = () => {
                   exact
                   activeClassName="router-link-exact-active"
                 >
-                   <img
-                      src={logo}
-                      alt="Recal"
-                      width="100"/>
+                  <img src={logo} alt="Recal" width="100" />
                 </NavLink>
               </NavItem>
               {isAuthenticated && (
-                <NavItem>
+                <NavItem
+                  className="greenbtnmargin"
+                >
                   <NavLink
                     tag={RouterNavLink}
                     to="/external-api"
                     exact
                     activeClassName="router-link-exact-active"
+                    id="qsLoginBtn"
+                    class="waves-effect waves-light btn"
                   >
-                    External API
+                    <p id="smallerfontgreenbtn">External API</p>
                   </NavLink>
                 </NavItem>
               )}
               {isAuthenticated && (
-                <NavItem>
+                <NavItem
+                  className="greenbtnmargin"
+                >
                   <NavLink
                     tag={RouterNavLink}
                     to="/dashboard"
                     exact
                     activeClassName="router-link-exact-active"
+                    id="qsLoginBtn"
+                    class="waves-effect waves-light btn"
                   >
-                    Dashboard
+                    <p id="smallerfontgreenbtn">Dashboard</p>
                   </NavLink>
                 </NavItem>
               )}
@@ -82,9 +87,15 @@ const NavBar = () => {
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-
                     class="waves-effect waves-light btn"
-                    onClick={() => loginWithRedirect({})}
+                    onClick={() =>
+                      loginWithRedirect({
+                        access_type: "offline",
+                        // Reminder: may need to add more scopes
+                        // connection_scope: "https://www.googleapis.com/auth/calendar.events.readonly",
+                        approval_prompt: "force"
+                      })
+                    }
                   >
                     Log in
                   </Button>
@@ -126,7 +137,7 @@ const NavBar = () => {
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-                    color="primary"
+                    class="waves-effect waves-light btn"
                     block
                     onClick={() => loginWithRedirect({})}
                   >
@@ -149,7 +160,10 @@ const NavBar = () => {
                       className="nav-user-profile d-inline-block rounded-circle mr-3"
                       width="50"
                     />
-                    <h6 className="d-inline-block">{user.name}</h6>
+                    <h6 
+                      className="d-inline-block username"
+                      style={{ textcolor: "rgb(253, 155, 91)" }}
+                    >{user.name}</h6>
                   </span>
                 </NavItem>
                 <NavItem>

@@ -19,6 +19,10 @@ import "./App.css";
 import initFontAwesome from "./utils/initFontAwesome";
 initFontAwesome();
 
+var style = {
+  backgroundColor: "lightgrey", 
+}
+
 const App = () => {
   const { loading } = useAuth0();
 
@@ -30,6 +34,7 @@ const App = () => {
     <BrowserRouter>
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
+        <div style={style}>
         <Container className="flex-grow-1 mt-5 homepageland">
           <Switch>
             <Route path="/" exact component={Home} />
@@ -38,6 +43,7 @@ const App = () => {
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </Container>
+        </div>
         <Footer />
       </div>
     </BrowserRouter>

@@ -1,26 +1,20 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('notes', {
+    return queryInterface.createTable('calendar_events_attendees', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      note_text: {
+      email: {
         type: Sequelize.STRING
       },
-      note_type: {
+      display_name: {
         type: Sequelize.STRING
       },
-      user_name: {
-        type: Sequelize.STRING
-      },
-      user_id: {
-        type: Sequelize.STRING
-      },
-      slack_user_id: {
+      response_status: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -34,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('notes');
+    return queryInterface.dropTable('calendar_events_attendees');
   }
 };

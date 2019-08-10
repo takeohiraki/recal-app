@@ -8,5 +8,7 @@ module.exports = function(app) {
    app.use(proxy(['/api/notes/*'], { target: 'http://localhost:5000' }));
    app.use(proxy(['/test'], { target: 'http://localhost:5000' }));
    app.use(proxy(['/api/notes/add-note'], { target: 'http://localhost:5000' }));
+   app.use(proxy(['/api/external'], { target: 'http://localhost:5000' }));
+   app.use(proxy(['/api/slack/add-agenda'], { target: 'http://localhost:5000' }));
 }
 

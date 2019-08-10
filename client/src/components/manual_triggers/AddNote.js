@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa.js";
 
+
 let exampleData = {
   note_text: "Note from add-note endpoint",
   note_type: "/Agenda",
@@ -13,6 +14,13 @@ const AddNote = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
+
+  // pull data from auth0 user profile to insert into note
+  const { user } = useAuth0()
+  // user_id - google-oauth2|nnnnnnnnn
+  console.log(user.sub)
+  // user_name - Full Name
+  console.log(user.name)
 
   const callApi = async () => {
     try {
