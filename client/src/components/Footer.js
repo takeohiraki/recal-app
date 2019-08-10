@@ -19,11 +19,12 @@ var style = {
   bottom: "0",
   height: "60px",
   width: "100%",
+  color: "rgb(253, 155, 91)",
 }
 
 var phantom = {
 display: 'block',
-padding: '20px',
+padding: '10px',
 height: '40px',
 width: '100%',
 }
