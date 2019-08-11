@@ -57,4 +57,22 @@
 
 #smallerfontgreenbtn {
   font-size: 10px;
+  color: white;
+}
+
+#qsLogoutBtn {
+  margin-bottom: 20px;
+}
+
+#username {
+  color: rgb(253, 155, 91);
+  font-size: 15px;
+}
+
+#logoutbtn {
+  color: red;
+}
+
+#profilebtn {
+  color: lightseagreen;
 }

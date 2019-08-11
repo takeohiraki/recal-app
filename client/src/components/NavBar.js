@@ -112,21 +112,21 @@ const NavBar = () => {
                     />
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem header>{user.name}</DropdownItem>
+                    <DropdownItem header><span id="username">{user.name}</span></DropdownItem>
                     <DropdownItem
                       tag={RouterNavLink}
                       to="/profile"
                       className="dropdown-profile"
                       activeClassName="router-link-exact-active"
                     >
-                      <FontAwesomeIcon icon="user" className="mr-3" /> Profile
+                      <FontAwesomeIcon icon="user" className="mr-3" /><span id="profilebtn"> Profile</span>
                     </DropdownItem>
                     <DropdownItem
                       id="qsLogoutBtn"
                       onClick={() => logoutWithRedirect()}
                     >
-                      <FontAwesomeIcon icon="power-off" className="mr-3" /> Log
-                      out
+                      <FontAwesomeIcon icon="power-off" className="mr-3" /><span id ="logoutbtn"> Log
+                      out</span> 
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
