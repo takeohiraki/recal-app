@@ -13,8 +13,8 @@ const PrivateRoute = ({ component: Component, path, ...rest }) => {
           appState: { targetUrl: path },
           access_type: 'offline', 
           // Reminder: may need to add more
-          connection_scope: 'https://www.googleapis.com/auth/calendar.events.readonly', 
-          approval_prompt: 'force'
+          // connection_scope: 'https://www.googleapis.com/auth/calendar.events.readonly', 
+          // approval_prompt: 'force'
         });
       }
     };
