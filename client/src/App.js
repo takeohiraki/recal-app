@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 
 import PrivateRoute from "./components/PrivateRoute";
 import Loading from "./components/Loading";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar.jsx";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
@@ -35,7 +35,7 @@ const App = () => {
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
         <div style={style}>
-        <Container className="flex-grow-1 mt-5 homepageland">
+        <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/dashboard" component={Dashboard} />

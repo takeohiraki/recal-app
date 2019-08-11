@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../assets/dark.png";
+import { NavLink as RouterNavLink } from "react-router-dom";
+import logo from "../../assets/dark.png";
 
 import {
   Collapse,
@@ -19,21 +19,22 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import { useAuth0 } from "../react-auth0-spa";
+import { useAuth0 } from "../../react-auth0-spa";
 
-const NavBar = () => {
+
+const NavBar_Authed = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const toggle = () => setIsOpen(!isOpen);
 
+
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const logoutWithRedirect = () =>
     logout({
       returnTo: window.location.origin
     });
-
+    
   return (
-    <div className="nav-container">
-      <Navbar color="light" light expand="md">
+<Navbar color="light" light expand="md">
         <Container>
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
@@ -49,7 +50,8 @@ const NavBar = () => {
                   <img src={logo} alt="Recal" width="100" />
                 </NavLink>
               </NavItem>
-              {isAuthenticated && (
+
+
                 <NavItem
                   className="greenbtnmargin"
                 >
@@ -59,13 +61,12 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                   >
                     <p id="smallerfontgreenbtn">External API</p>
                   </NavLink>
                 </NavItem>
-              )}
-              {isAuthenticated && (
+
                 <NavItem
                   className="greenbtnmargin"
                 >
@@ -75,78 +76,43 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                     id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
+                    className="waves-effect waves-light btn"
                   >
                     <p id="smallerfontgreenbtn">Dashboard</p>
                   </NavLink>
                 </NavItem>
-              )}
             </Nav>
             <Nav className="d-none d-md-block" navbar>
-              {!isAuthenticated && (
-                <NavItem>
-                  <Button
-                    id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
-                    onClick={() =>
-                      loginWithRedirect({
-                        access_type: "offline",
-                        // Reminder: may need to add more scopes
-                        // connection_scope: "https://www.googleapis.com/auth/calendar.events.readonly",
-                        // approval_prompt: "force"
-                      })
-                    }
-                  >
-                    Log in
-                  </Button>
-                </NavItem>
-              )}
-              {isAuthenticated && (
+          
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret id="profileDropDown">
                     <img
-                      src={user.picture}
+                      src={this.props.user.picture}
                       alt="Profile"
                       className="nav-user-profile rounded-circle"
                       width="50"
                     />
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem header>{user.name}</DropdownItem>
+                    <DropdownItem header><span id="username">{this.props.user.name}</span></DropdownItem>
                     <DropdownItem
                       tag={RouterNavLink}
                       to="/profile"
                       className="dropdown-profile"
                       activeClassName="router-link-exact-active"
                     >
-                      <FontAwesomeIcon icon="user" className="mr-3" /> Profile
+                      <FontAwesomeIcon icon="user" className="mr-3" /><span id="profilebtn"> Profile</span>
                     </DropdownItem>
                     <DropdownItem
                       id="qsLogoutBtn"
                       onClick={() => logoutWithRedirect()}
                     >
-                      <FontAwesomeIcon icon="power-off" className="mr-3" /> Log
-                      out
+                      <FontAwesomeIcon icon="power-off" className="mr-3" /><span id ="logoutbtn"> Log
+                      out</span> 
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
-              )}
             </Nav>
-            {!isAuthenticated && (
-              <Nav className="d-md-none" navbar>
-                <NavItem>
-                  <Button
-                    id="qsLoginBtn"
-                    class="waves-effect waves-light btn"
-                    block
-                    onClick={() => loginWithRedirect({})}
-                  >
-                    Log in
-                  </Button>
-                </NavItem>
-              </Nav>
-            )}
-            {isAuthenticated && (
               <Nav
                 className="d-md-none justify-content-between"
                 navbar
@@ -155,7 +121,7 @@ const NavBar = () => {
                 <NavItem>
                   <span className="user-info">
                     <img
-                      src={user.picture}
+                      src={this.props.user.picture}
                       alt="Profile"
                       className="nav-user-profile d-inline-block rounded-circle mr-3"
                       width="50"
@@ -163,7 +129,7 @@ const NavBar = () => {
                     <h6 
                       className="d-inline-block username"
                       style={{ textcolor: "rgb(253, 155, 91)" }}
-                    >{user.name}</h6>
+                    >{this.props.user.name}</h6>
                   </span>
                 </NavItem>
                 <NavItem>
@@ -186,12 +152,10 @@ const NavBar = () => {
                   </RouterNavLink>
                 </NavItem>
               </Nav>
-            )}
           </Collapse>
         </Container>
       </Navbar>
-    </div>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar_Authed;

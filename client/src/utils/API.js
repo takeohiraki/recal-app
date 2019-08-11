@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useAuth0 } from "../react-auth0-spa.js";
-
 
 export default {
   googleSeed: function() {
