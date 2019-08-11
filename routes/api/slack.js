@@ -51,10 +51,9 @@ router_slack.post("/api/slack/add-agenda", function (req, res) {
     channel_name, user_id, user_name, command, text, response_url, trigger_id
   } = req.body
 
+  // Reminder: Need to change this to 
   var recalUser = 'google-oauth2|114577142554347012839'
 
-    // console.log(newData)
-    // let stuff = JSON.parse(req.body)
     console.log(req.body)
 
   notes.create({

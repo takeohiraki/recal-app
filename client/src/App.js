@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
+import Privacy from "./views/Privacy";
 import { useAuth0 } from "./react-auth0-spa";
 import ExternalApi from "./components/manual_triggers/ExternalApi";
 
@@ -41,6 +42,7 @@ const App = () => {
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
+            <Route path="/privacy" exact component={Privacy} />
           </Switch>
         </Container>
         </div>
