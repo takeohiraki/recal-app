@@ -43,28 +43,32 @@ router_slack.get('/slack-session', (req, res) => {
 
 
 router_slack.post("/api/slack/add-agenda", function (req, res) {
-  console.log("agenda attempted")
-  var newData = req.body;
-  const {
-    text,
-    command,
-    user_name,
-    user_id
+  console.log("/api/slack/add-agenda attempted")
+
+/*   var newData = {
+    token, team_id, team_domain, enterprise_id, enterprise_name, channel_id, 
+    channel_name, user_id, user_name, command, text, response_url, trigger_id
   } = req.body
+ */
+  var recalUser = 'google-oauth2|114577142554347012839'
+
+    // console.log(newData)
+    console.log(req.body)
 
   notes.create({
-      note_text: newData.text,
-      note_type: newData.command,
-      user_name: newData.user_name,
-      user_id: newData.user_id,
-      slack_user_id: newData.user_id
-    })
-    .then((note) => {
-      res.status(201).json(note)
-    })
-    .catch((err) => {
-      console.log("Error while creating slack message : ", err)
-    });
+        note_text: req.body.text,
+        note_type: req.body.command,
+        user_name: req.body.user_name,
+        user_id: recalUser,
+        slack_user_id: req.body.user_id
+      })
+      .then(newNote => {
+          console.log(newNote)
+        res.status(201).send(newNote);
+      })
+      .catch(err => {
+        console.log("Error while creating note from slack: ", err);
+      });
 });
 
 // Basic route that sends the user first to the AJAX Page

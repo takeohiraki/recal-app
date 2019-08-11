@@ -12,6 +12,7 @@ import GetNotes from "../manual_triggers/GetNotes.js";
 import GetNotesManual from "../manual_triggers/GetNotesManual.js";
 import AddNote from "../manual_triggers/AddNote.js";
 import GetEvents from "../manual_triggers/GetEvents.js";
+import AddSlackNote from "../manual_triggers/AddSlackNote.js";
 
 import "./style.css";
 import API from "../../utils/API";
@@ -46,6 +47,7 @@ class Content extends Component {
         <SeedNotes />
         {/* <GetNotesManual /> */}
         <AddNote />
+        <AddSlackNote />
         {/* <GetGoogleEvents /> */}
         {/* <h2 className="my-5 text-center">Recal</h2> */}
         <Row className="d-flex justify-content-between">
