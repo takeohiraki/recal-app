@@ -1,7 +1,6 @@
 var express = require("express");
 var router_slack = express.Router();
 var passport = require('passport');
-const bodyParser = require('body-parser')
 
 // Import the model to use its database functions.
 const models = require("../../models");
@@ -55,7 +54,8 @@ router_slack.post("/api/slack/add-agenda", function (req, res) {
   var recalUser = 'google-oauth2|114577142554347012839'
 
     // console.log(newData)
-    console.log(req)
+    // let stuff = JSON.parse(req.body)
+    console.log(req.body)
 
   notes.create({
         note_text: newData.text,
