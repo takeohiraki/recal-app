@@ -4,10 +4,11 @@ import { Container } from "reactstrap";
 
 import PrivateRoute from "./components/PrivateRoute";
 import Loading from "./components/Loading";
-import NavBar from "./components/NavBar/NavBar.jsx";
+import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
+import Dashboardnew from "./views/Dashboardnew";
 import Profile from "./views/Profile";
 import Privacy from "./views/Privacy";
 import { useAuth0 } from "./react-auth0-spa";
@@ -40,6 +41,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/home" component={Dashboardnew} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
             <Route path="/privacy" exact component={Privacy} />
