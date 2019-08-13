@@ -10,6 +10,8 @@ import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import Privacy from "./views/Privacy";
+import AgendaSubmission from "./views/AgendaSubmission";
+import LandingPage from "./views/LandingPage/LandingPage";
 import { useAuth0 } from "./react-auth0-spa";
 import ExternalApi from "./components/manual_triggers/ExternalApi";
 
@@ -36,15 +38,17 @@ const App = () => {
       <div id="app" className="d-flex flex-column h-100">
         <NavBar />
         <div style={style}>
-        <Container className="flex-grow-1 mt-5">
+        {/* <Container className="flex-grow-1 mt-5"> */}
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/landing" exact component={LandingPage} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
             <Route path="/privacy" exact component={Privacy} />
+            <Route path="/agenda-submission" exact component={AgendaSubmission} />
           </Switch>
-        </Container>
+        {/* </Container> */}
         </div>
         <Footer />
       </div>
