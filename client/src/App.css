@@ -52,7 +52,10 @@
 }
 
 .greenbtnmargin {
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  margin-left: 50px;
 }
 
 #smallerfontgreenbtn {
