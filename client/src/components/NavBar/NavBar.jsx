@@ -42,7 +42,7 @@ const NavBar = () => {
               <NavItem>
                 <NavLink
                   tag={RouterNavLink}
-                  to="/"
+                  to="/home"
                   exact
                   activeClassName="router-link-exact-active"
                 >
