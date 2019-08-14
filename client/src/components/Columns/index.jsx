@@ -1,73 +1,57 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
-import { Row, Col } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Jumbotron, List, ListItem } from "bootstrap/dist/css/bootstrap.css";
-
-import contentData from "../../utils/contentData";
 import ExternalApi from "../manual_triggers/ExternalApi.js";
 import SeedCal from "../manual_triggers/SeedCal.js";
 import SeedNotes from "../manual_triggers/SeedNotes.js";
-import GetNotes from "../manual_triggers/GetNotes.js";
-import GetNotesManual from "../manual_triggers/GetNotesManual.js";
 import AddNote from "../manual_triggers/AddNote.js";
-import GetEvents from "../manual_triggers/GetEvents.js";
 import AddSlackNote from "../manual_triggers/AddSlackNote.js";
 
-import "./style.css";
-import API from "../../utils/API";
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
+import "./style.css";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }
+});
 
 class Content extends Component {
-  /*   state = {
-    notes: []
-  }; */
-
-  /*   componentDidMount() {
-    this.getNotes();
-  } */
-
-  /*   getNotes = () => {
-    API.getNotes()
-      .then(res => this.setState({ notes: res.data }))
-      .catch(err => console.log(err));
-  }; */
-
-  /*  seedGoogle = () => {
-    API.seedGoogle()
-      .then(res => console.log("seeded"))
-      .catch(err => console.log(err));
-  }; */
-
+  
   render() {
-    return (
-      <div className="next-steps my-2">
-        <ExternalApi />
-        <SeedCal />
-        <SeedNotes />
-        {/* <GetNotesManual /> */}
-        <AddNote />
-        <AddSlackNote />
-        {/* <GetGoogleEvents /> */}
-        {/* <h2 className="my-5 text-center">Recal</h2> */}
-        <Row className="d-flex justify-content-between">
-          <div className="card text-center notes-card">
-            <div className="card-header">
-              <h5><strong>Notes</strong></h5>
-            </div>
-            <GetNotes />
-          </div>
+    
+    const { classes } = this.props;
 
-          <div className="card text-center event-project-card">
-            <div className="card-header">
-              <h5><strong>Events / Project</strong></h5>
-            </div>
-            <GetEvents />
-          </div>
-        </Row>
-      </div>
+    return (
+        <div className={classes.root}>
+          <ExternalApi />
+          <SeedCal />
+          <SeedNotes />
+          <AddNote />
+          <AddSlackNote />
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Paper className={classes.paper}><div>Notes: {JSON.stringify(this.props.notes, null, 2)}</div></Paper>
+            </Grid>
+            <Grid item xs={9}>
+              <Paper className={classes.paper}><div>Events: {JSON.stringify(this.props.events, null, 2)}</div></Paper>
+            </Grid>
+          </Grid>
+        </div>
     );
   }
 }
 
-export default Content;
+Content.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles) (Content);
