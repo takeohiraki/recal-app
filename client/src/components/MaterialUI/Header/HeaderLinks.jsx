@@ -32,10 +32,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Apps, CloudDownload } from "@material-ui/icons";
 
 // core components
-import CustomDropdown from "../../components/CustomDropdown/CustomDropdown.jsx";
-import Button from "../../components/CustomButtons/Button.jsx";
+import CustomDropdown from "../../MaterialUI/CustomDropdown/CustomDropdown";
+import Button from "../CustomButtons/Button";
 
-import headerLinksStyle from "../../assets/jss/material-kit-react/components/headerLinksStyle.jsx";
+import headerLinksStyle from "../../../assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 
 function HeaderLinks({ ...props }) {
   const { classes } = props;
