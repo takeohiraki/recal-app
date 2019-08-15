@@ -1,27 +1,14 @@
-<<<<<<< HEAD
-import React, { Fragment } from "react";
-=======
 import React, {
   Fragment,
   useState,
   useEffect 
 } from "react";
 
->>>>>>> 083271ee1c0e540378e341ce7c29080b4262692f
 import Columns from "../components/Columns/index";
 import {
   useAuth0
 } from "../../src/react-auth0-spa";
 
-<<<<<<< HEAD
-const Dashboardnew= () => (
-  <Fragment>
-    <Columns />
-  </Fragment>
-)
-
-export default Dashboardnew;
-=======
 const Dashboard = () => {
 
   const [showResult, setShowResult] = useState(false);
@@ -90,4 +77,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
->>>>>>> 083271ee1c0e540378e341ce7c29080b4262692f

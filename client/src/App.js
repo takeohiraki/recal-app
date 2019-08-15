@@ -10,16 +10,11 @@ import Container from '@material-ui/core/Container'
 
 // AUTH ROUTE
 import PrivateRoute from "./components/PrivateRoute";
-<<<<<<< HEAD
-import Loading from "./components/Loading";
-import NavBar from "./components/NavBar/NavBar";
-=======
 
 // COMPONENTS
-import NavBar from "./components/NavBar/NavBar.jsx";
->>>>>>> 083271ee1c0e540378e341ce7c29080b4262692f
-import Footer from "./components/Footer";
 import Loading from "./components/Loading";
+import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer";
 
 // REQUIRE AUTH
 import Dashboard from "./views/Dashboard";
