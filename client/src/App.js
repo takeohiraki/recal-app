@@ -1,25 +1,45 @@
+
+// GENERIC REACT LIBS
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Container } from "reactstrap";
 
+// MATERIAL UI COMPONENTS
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container'
+
+// AUTH ROUTE
 import PrivateRoute from "./components/PrivateRoute";
+<<<<<<< HEAD
 import Loading from "./components/Loading";
 import NavBar from "./components/NavBar/NavBar";
+=======
+
+// COMPONENTS
+import NavBar from "./components/NavBar/NavBar.jsx";
+>>>>>>> 083271ee1c0e540378e341ce7c29080b4262692f
 import Footer from "./components/Footer";
-import Home from "./views/Home";
+import Loading from "./components/Loading";
+
+// REQUIRE AUTH
 import Dashboard from "./views/Dashboard";
 import Dashboardnew from "./views/Dashboardnew";
 import Profile from "./views/Profile";
+import ExternalApi from "./components/manual_triggers/ExternalApi";
+
+// DOES NOT REQUIRE AUTH
+import Home from "./views/Home";
 import Privacy from "./views/Privacy";
 import AgendaSubmission from "./views/AgendaSubmission";
 import LandingPage from "./views/LandingPage/LandingPage";
-import { useAuth0 } from "./react-auth0-spa";
-import ExternalApi from "./components/manual_triggers/ExternalApi";
 
-// styles
+// LIB
+import { useAuth0 } from "./react-auth0-spa";
+
+// APP STYLES 
 import "./App.css";
 
-// fontawesome
+// FONTS
 import initFontAwesome from "./utils/initFontAwesome";
 initFontAwesome();
 
@@ -36,23 +56,23 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div id="app" className="d-flex flex-column h-100">
+      <div id="app">
+        <Container>
         <NavBar />
-        <div style={style}>
-        {/* <Container className="flex-grow-1 mt-5"> */}
+        <div style={style}>     
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/landing" exact component={LandingPage} />
+            <Route path="/privacy" exact component={Privacy} />
+            <Route path="/agenda-submission" exact component={AgendaSubmission} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/home" component={Dashboardnew} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
-            <Route path="/privacy" exact component={Privacy} />
-            <Route path="/agenda-submission" exact component={AgendaSubmission} />
           </Switch>
-        {/* </Container> */}
         </div>
         <Footer />
+        </Container>
       </div>
     </BrowserRouter>
   );
