@@ -50,8 +50,8 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div id="app" className="d-flex flex-column h-100">
-        <Container maxWidth="sm">
+      <div id="app">
+        <Container>
         <NavBar />
         <div style={style}>     
           <Switch>

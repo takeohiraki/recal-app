@@ -65,10 +65,11 @@ const Dashboard = () => {
 
   useEffect(() => loadUserData(user.sub), []);
   
+  //{showResult && <div>Notes: {JSON.stringify(userNotes, null, 2)}</div>}
+  //{showResult && <div>Events: {JSON.stringify(userEvents, null, 2)}</div>}
+
   return ( 
     <Fragment>
-       {showResult && <div>Notes: {JSON.stringify(userNotes, null, 2)}</div>}
-       {showResult && <div>Events: {JSON.stringify(userEvents, null, 2)}</div>}
       <Columns notes={userNotes} events={userEvents} />
     </Fragment>
   )

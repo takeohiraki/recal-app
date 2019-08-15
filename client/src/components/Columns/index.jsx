@@ -10,6 +10,7 @@ import AddSlackNote from "../manual_triggers/AddSlackNote.js";
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import NoteCard from '../NoteCard/NoteCard'
 
 import "./style.css";
 
@@ -25,10 +26,50 @@ const styles = theme => ({
 });
 
 class Content extends Component {
-  
+
   render() {
     
     const { classes } = this.props;
+
+    let NoteCards = null;
+    let EventCards = null;  
+
+    let list = [1,2,3];
+
+    if(this.props.notes)
+    {
+      NoteCards = 
+      <div>
+        {
+          Array.from(this.props.notes).map(note =>
+          {
+              console.log(note);
+              return <NoteCard 
+              key={ note.id } 
+              message={ note.note_text } 
+              created={ note.createdAt }
+              username={ note.user_name }
+              ></NoteCard>
+          })
+        }
+      </div>
+    }
+
+    if(this.props.events)
+    {
+      EventCards = 
+      <div>
+        {
+          Array.from(this.props.events).map(event =>
+          {
+              return <NoteCard></NoteCard>
+          })
+        }
+      </div>
+    }
+
+    //<Paper className={classes.paper}>{NoteCards}<div>Notes: {JSON.stringify(this.props.notes, null, 2)}</div></Paper>
+    //<Paper className={classes.paper}><div>Events: {JSON.stringify(this.props.events, null, 2)}</div></Paper>
 
     return (
         <div className={classes.root}>
@@ -38,11 +79,15 @@ class Content extends Component {
           <AddNote />
           <AddSlackNote />
           <Grid container spacing={3}>
-            <Grid item xs>
-              <Paper className={classes.paper}><div>Notes: {JSON.stringify(this.props.notes, null, 2)}</div></Paper>
+            <Grid item xs={3}>
+        
+                {NoteCards}
+ 
             </Grid>
             <Grid item xs={9}>
-              <Paper className={classes.paper}><div>Events: {JSON.stringify(this.props.events, null, 2)}</div></Paper>
+            
+                {EventCards}
+  
             </Grid>
           </Grid>
         </div>
