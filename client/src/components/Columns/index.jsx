@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import NoteCard from '../NoteCard/NoteCard'
+import EventCard from '../EventCard/EventCard'
 
 import "./style.css";
 
@@ -33,8 +34,6 @@ class Content extends Component {
 
     let NoteCards = null;
     let EventCards = null;  
-
-    let list = [1,2,3];
 
     if(this.props.notes)
     {
@@ -62,7 +61,7 @@ class Content extends Component {
         {
           Array.from(this.props.events).map(event =>
           {
-              return <NoteCard></NoteCard>
+              return <EventCard></EventCard>
           })
         }
       </div>

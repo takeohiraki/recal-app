@@ -31,16 +31,16 @@ export default function SimpleCard() {
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-            
+            customize me 
         </Typography>
         <Typography variant="h5" component="h2">
-       
+            customize me 
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-        
+            customize me 
         </Typography>
         <Typography variant="body2" component="p">
-    
+            customize me 
         </Typography>
       </CardContent>
       <CardActions>
