@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa.js";
 import { MdSync } from "react-icons/md";
-
+import "./style.css";
 
 const GetNotes = () => {
   const [showResult, setShowResult] = useState(false);

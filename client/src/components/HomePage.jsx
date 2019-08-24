@@ -1,7 +1,7 @@
 import React from "react";
 import one from "../assets/1.png";
 import two from "../assets/2.png";
-import CarouselJumboTron from "../components/Carousel";
+import "./style.css";
 
 const HomePage = () => (
   <div className="container">

@@ -5,6 +5,7 @@ import React, {
 } from "react";
 
 import Columns from "../components/Columns/index";
+import NavBar from "../components/NavBar/NavBar";
 import {
   useAuth0
 } from "../../src/react-auth0-spa";
@@ -70,7 +71,10 @@ const Dashboard = () => {
 
   return ( 
     <Fragment>
+      <NavBar />
+      <div class="container greybackground">
       <Columns notes={userNotes} events={userEvents} />
+      </div>
     </Fragment>
   )
 

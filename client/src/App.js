@@ -52,22 +52,20 @@ const App = () => {
   return (
     <BrowserRouter>
       <div id="app">
-        <Container>
-        <NavBar />
-        <div style={style}>     
+    
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/landing" exact component={LandingPage} />
+            <Route path="/" exact component={LandingPage} />
             <Route path="/privacy" exact component={Privacy} />
+            <Route path="/homepage" exact component={Home} />
             <Route path="/agenda-submission" exact component={AgendaSubmission} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/home" component={Dashboardnew} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
-        </div>
+
         <Footer />
-        </Container>
+
       </div>
     </BrowserRouter>
   );

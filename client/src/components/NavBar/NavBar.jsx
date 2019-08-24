@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/dark.png";
+import "./style.css";
 
 import {
   Collapse,
@@ -39,7 +40,7 @@ const NavBar = () => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
-              <NavItem>
+              <NavItem className="logorecal">
                 <NavLink
                   tag={RouterNavLink}
                   to="/home"
@@ -51,7 +52,7 @@ const NavBar = () => {
               </NavItem>
               {isAuthenticated && (
                 <NavItem
-                  className="greenbtnmargin"
+                  className="greenbtnmargin navbarbtn"
                 >
                   <NavLink
                     tag={RouterNavLink}

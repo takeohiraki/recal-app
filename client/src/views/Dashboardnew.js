@@ -1,13 +1,14 @@
 import React, { Fragment } from "react";
 import GetNote from "../components/Notes/Notes";
 import Sidebar from "../components/Sidebar";
-import App from "../components/Notes/test";
+import Notes from "../components/Notes/test";
 
 const Dashboardnew= () => (
   <Fragment>
-    <GetNote />
-   <App />
-   <Sidebar />
+    <Sidebar />
+    <div className="container">
+    <Notes />
+    </div>
   </Fragment>
 );
 
