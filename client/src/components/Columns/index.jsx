@@ -61,7 +61,13 @@ class Content extends Component {
         {
           Array.from(this.props.events).map(event =>
           {
-              return <EventCard></EventCard>
+              return <EventCard 
+              key={event.id}
+              title={event.event_titles}
+              desc={event.event_description}
+              created={ event.event_created_at }
+              creator={ event.creator_email }
+              ></EventCard>
           })
         }
       </div>
