@@ -7,6 +7,7 @@ import SeedNotes from "../manual_triggers/SeedNotes.js";
 import AddNote from "../manual_triggers/AddNote.js";
 import AddSlackNote from "../manual_triggers/AddSlackNote.js";
 
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -39,6 +40,7 @@ class Content extends Component {
     {
       NoteCards = 
       <div>
+        <Typography></Typography>
         {
           Array.from(this.props.notes).map(note =>
           {
@@ -81,12 +83,16 @@ class Content extends Component {
         
           <Grid container spacing={3}>
             <Grid item xs={3}>
-        
+                <Typography variant="h4" gutterBottom>
+                  Your Notes
+                </Typography>
                 {NoteCards}
  
             </Grid>
             <Grid item xs={9}>
-            
+                <Typography variant="h4" gutterBottom>
+                  Meetings
+                </Typography>
                 {EventCards}
   
             </Grid>
