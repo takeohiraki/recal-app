@@ -181,7 +181,7 @@ const Dashboardnew= () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          Persistent drawer
+          Dashboard
         </Typography>
       </Toolbar>
       </AppBar>

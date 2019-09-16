@@ -13,6 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import NoteCard from '../NoteCard/NoteCard'
 import EventCard from '../EventCard/EventCard'
+import TextField from '@material-ui/core/TextField';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import "./style.css";
 
@@ -20,10 +24,28 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  button: {
+    margin: '10px 0px 0px 0px',
+    marginLeft: "auto",
+    marginRight: -12
+  },
+  leftIcon: {
+    marginRight: theme.spacing(1),
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   }
 });
 
@@ -86,7 +108,22 @@ class Content extends Component {
                 <Typography variant="h4" gutterBottom>
                   Your Notes
                 </Typography>
-                {NoteCards}
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Add Note"
+                  multiline
+                  rows="4"
+                  className={classes.textField}
+                  style={{ margin: 0, marginTop: 8 }}
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                />
+                <Button variant="contained" color="primary" className={classes.button}>
+                  Add Note
+                  <AddCircleOutlineIcon className={classes.rightIcon}></AddCircleOutlineIcon>
+                </Button>
+                {NoteCards} 
  
             </Grid>
             <Grid item xs={9}>
