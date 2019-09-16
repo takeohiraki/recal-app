@@ -78,11 +78,7 @@ class Content extends Component {
 
     return (
         <div className={classes.root}>
-          <ExternalApi />
-          <SeedCal />
-          <SeedNotes />
-          <AddNote />
-          <AddSlackNote />
+        
           <Grid container spacing={3}>
             <Grid item xs={3}>
         
@@ -99,6 +95,13 @@ class Content extends Component {
     );
   }
 }
+
+/*  <ExternalApi />
+          <SeedCal />
+          <SeedNotes />
+          <AddNote />
+          <AddSlackNote />
+          */
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
