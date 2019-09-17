@@ -134,7 +134,6 @@ const Dashboardnew= () => {
 
       let notesDataJson = await  notesDataResponse.json()
       console.log(`Obtained ${notesDataJson.length} User Notes`);
-
       setUserNotes(notesDataJson);
 
        /// EVENTS /// 

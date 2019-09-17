@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Moment from 'react-moment';
 
+import { useDrop } from 'react-dnd'
+
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
@@ -37,6 +39,14 @@ export default function SimpleCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
+	const [{ isOver }, drop] = useDrop({
+		accept: "NOTE_CARD",
+		drop: () => { console.log('drop')},
+		collect: monitor => ({
+			isOver: !!monitor.isOver(),
+		}),
+	})
+
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -48,11 +58,11 @@ export default function SimpleCard(props) {
         </Grid>
         <Grid item xs={3}>
           <Typography variant="h5" component="h3">
-            <Moment format="HH:mm">
+            <Moment format="HH:mm A">
               { props.startDt }
             </Moment>
-             - 
-            <Moment format="HH:mm">
+            &nbsp;-&nbsp;
+            <Moment format="HH:mm A">
               { props.endDt }
             </Moment>
           </Typography>
@@ -63,6 +73,15 @@ export default function SimpleCard(props) {
           <Typography className={classes.cardTitles} >
             Agenda & Notes
           </Typography>
+          <div
+            ref={drop}
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+            }}
+          >
+          </div>
         </Grid>
         <Grid item xs={3}>
           <Typography className={classes.cardTitles}>

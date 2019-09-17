@@ -3,6 +3,10 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+// DRAG & DROP CONTEXT
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
+
 // MATERIAL UI COMPONENTS
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -50,24 +54,26 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <div id="app">
-    
-          <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/privacy" exact component={Privacy} />
-            <Route path="/homepage" exact component={Home} />
-            <Route path="/agenda-submission" exact component={AgendaSubmission} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/home" component={Dashboardnew} />
-            <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/external-api" component={ExternalApi} />
-          </Switch>
+    <DndProvider backend={HTML5Backend}>
+      <BrowserRouter>
+        <div id="app">
 
-        <Footer />
+            <Switch>
+              <Route path="/" exact component={LandingPage} />
+              <Route path="/privacy" exact component={Privacy} />
+              <Route path="/homepage" exact component={Home} />
+              <Route path="/agenda-submission" exact component={AgendaSubmission} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/home" component={Dashboardnew} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/external-api" component={ExternalApi} />
+            </Switch>
 
-      </div>
-    </BrowserRouter>
+          <Footer />
+
+        </div>
+      </BrowserRouter>
+    </DndProvider>
   );
 };
 
