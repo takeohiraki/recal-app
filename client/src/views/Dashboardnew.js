@@ -147,6 +147,7 @@ const Dashboardnew= () => {
 
       let eventsDataJson = await  eventsDataResponse.json()
       console.log(`Obtained ${eventsDataJson.length} User Events`);
+      console.log(eventsDataJson);
 
       setUserEvents(eventsDataJson);
 
@@ -195,6 +196,7 @@ const Dashboardnew= () => {
         }}
       >
         <div className={classes.drawerHeader}>
+          <Link to="/home"><img src={logo} alt="Recal" width="100" /></Link>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />

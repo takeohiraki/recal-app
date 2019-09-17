@@ -54,6 +54,7 @@ const Dashboard = () => {
       let eventsDataJson = await  eventsDataResponse.json()
       console.log(`Obtained ${eventsDataJson.length} User Events`);
 
+
       setUserEvents(eventsDataJson);
 
       setShowResult(true);

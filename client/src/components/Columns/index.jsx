@@ -87,10 +87,12 @@ class Content extends Component {
           {
               return <EventCard 
               key={event.id}
-              title={event.event_titles}
+              title={event.event_title}
               desc={event.event_description}
               created={ event.event_created_at }
               creator={ event.creator_email }
+              startDt={ event.event_start }
+              endDt={ event.event_end }
               ></EventCard>
           })
         }
