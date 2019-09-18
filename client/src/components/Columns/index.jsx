@@ -121,11 +121,8 @@ class Content extends Component {
                   margin="normal"
                   variant="outlined"
                   fullWidth
+                  onKeyUp={this.props.addNote}
                 />
-                <Button variant="contained" color="primary" className={classes.button}>
-                  Add Note
-                  <AddCircleOutlineIcon className={classes.rightIcon}></AddCircleOutlineIcon>
-                </Button>
                 {NoteCards} 
  
             </Grid>

@@ -32,6 +32,8 @@ export default function SimpleCard(props) {
 		}),
   });
 
+  console.log(props);
+
   return (
     <div
     ref={drag}
@@ -42,22 +44,22 @@ export default function SimpleCard(props) {
       cursor: 'move',
       }}
     >
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography  className={classes.title} variant="h5" component="h3">
-            #{props.message}
-        </Typography>
-        <Typography variant="body2" component="p">
-            Created on&nbsp;
-            <Moment format="DD-MM-YYYY HH:mm A">
-              {props.created}
-            </Moment>
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography  className={classes.title} variant="h5" component="h3">
+              #{props.message}
+          </Typography>
+          <Typography variant="body2" component="p">
+              Created on&nbsp;
+              <Moment format="DD-MM-YYYY HH:mm A">
+                {props.created}
+              </Moment>
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
     </div>
   );
 }

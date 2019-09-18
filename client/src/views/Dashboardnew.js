@@ -147,7 +147,6 @@ const Dashboardnew= () => {
       let eventsDataJson = await  eventsDataResponse.json()
       console.log(`Obtained ${eventsDataJson.length} User Events`);
       console.log(eventsDataJson);
-
       setUserEvents(eventsDataJson);
 
       setShowResult(true);
@@ -157,6 +156,56 @@ const Dashboardnew= () => {
     initGetUserData();
 
   };
+
+  const addNoteToDB = async (newNote) => {
+    try {
+      const token = await getTokenSilently();
+      console.log("TOKEN: " + token);
+      const response = await fetch("/api/notes/add-note", {
+        method: "post",
+        headers: {
+          'Authorization': `Bearer ${token}`
+          , 'Content-Type': 'application/json'
+          , 'Accept': 'application/json',
+        },
+        body: JSON.stringify(newNote)
+      });
+
+      const responseData = await response.json();
+
+      console.log(responseData);
+
+      var existingNotes = [...userNotes];
+      existingNotes.push(responseData);
+  
+      setUserNotes(existingNotes);
+      console.log(existingNotes);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const noteAddedEvent = (event) => {
+   
+    if(event.key != 'Enter' || event.target.value == '') 
+    {
+        return;
+    }
+
+    var noteMessage = event.target.value;
+
+    var newNote = {
+      note_text: noteMessage,
+      note_type: 'Manual',
+      command: '',
+      user_name: user.given_name,
+      user_id: user.sub
+    };
+
+    addNoteToDB(newNote);
+
+  }
 
   useEffect(() => loadUserData(user.sub), []);
   
@@ -238,7 +287,7 @@ const Dashboardnew= () => {
           [classes.contentShift]: open
         })}>
         <div className={classes.drawerHeader} />
-        <Columns notes={userNotes} events={userEvents} />
+        <Columns addNote={noteAddedEvent} notes={userNotes} events={userEvents} />
       </main>
     </div>
   

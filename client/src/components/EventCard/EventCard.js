@@ -47,16 +47,6 @@ export default function SimpleCard(props) {
 		}),
 	})
 
-  const attendeesList = '';
-  if(props.attendees !== undefined)
-  {
-      console.log(props.attendees);
-      /*props.attendees.map((item, index) => (
-
-      )
-      );*/
-  }
-
   return (
     <Card className={classes.card}>
       <CardContent>
