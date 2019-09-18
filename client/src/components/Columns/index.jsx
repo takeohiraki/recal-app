@@ -93,6 +93,7 @@ class Content extends Component {
               creator={ event.creator_email }
               startDt={ event.event_start }
               endDt={ event.event_end }
+              attendees={ JSON.parse(event.event_attendees) }
               ></EventCard>
           })
         }
