@@ -146,8 +146,28 @@ const Dashboardnew= () => {
 
       let eventsDataJson = await  eventsDataResponse.json()
       console.log(`Obtained ${eventsDataJson.length} User Events`);
-      console.log(eventsDataJson);
       setUserEvents(eventsDataJson);
+
+      var eventIdsItems = eventsDataJson.map((item, index) =>{ 
+        return item.id 
+      });
+      var eventIdsItemsJson = JSON.stringify(eventIdsItems);
+      // EVENT NOTES // 
+      console.log(`Getting Event Notes - ${token.substring(0, 15) + '...'}`);
+     
+      const eventNotesDataResponse = await fetch("/api/event/notes", {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: {
+          eventIds: eventIdsItemsJson.toString()
+        }
+      });
+      let eventNotesDataJson = await  eventNotesDataResponse.json()
+      console.log(`Obtained ${eventNotesDataJson.length} User Event Notes`);
+      //console.log(eventNotesDataJson);
+      //setUserEvents(eventNotesDataJson);
 
       setShowResult(true);
      

@@ -85,7 +85,7 @@ router_google.get("/api/google/seed_experimental", checkJwt, (req, res) => {
   res.status(200).redirect("/home");
 });
 
-router_google.post("/events/notes", (req, res) => {
+/*router_google.post("/api/event/notes", (req, res) => {
   var eventIds = req.body.eventIds;
 
   googleCallEventNotes
@@ -116,9 +116,9 @@ router_google.post("/events/notes", (req, res) => {
           });
         });
     });
-});
+});*/
 
-router_google.post("/api/event/add-note", function(req, res) {
+router_google.post("/api/event/add-note", checkJwt, function(req, res) {
   googleCallEventNotes
     .create({
       event_id: req.body.event_id,

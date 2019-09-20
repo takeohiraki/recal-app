@@ -6,6 +6,8 @@ var path = require("path");
 const Sequelize = require("sequelize");
 const models = require("../../models");
 const notes = models.notes;
+const googleCallEventNotes = models.google_cal_event_notes;
+const slackMessages = models.slack_message;
 // const auth0_helpers = require('../middleware/auth_helpers')
 
 console.log("ran notes");
@@ -45,6 +47,39 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+router_notes_api.post("/api/event/notes", (req, res) => {
+  var eventIds = req.body.eventIds;
+
+  googleCallEventNotes
+    .findAll({
+      where: {
+        event_id: {
+          [Sequelize.Op.in]: eventIds
+        }
+      }
+    })
+    .then(googleCallEventNotes => {
+      var noteIds = googleCallEventNotes.map(function(item) {
+        return item.note_id;
+      });
+
+      slackMessages
+        .findAll({
+          where: {
+            id: {
+              [Sequelize.Op.in]: noteIds
+            }
+          }
+        })
+        .then(slackMessages => {
+          res.status(200).send({
+            event_notes: googleCallEventNotes,
+            messages: slackMessages
+          });
+        });
+    });
+});
 
 /////////////////////////
 // Seed the notes table

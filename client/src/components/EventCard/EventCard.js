@@ -40,11 +40,13 @@ export default function SimpleCard(props) {
   const bull = <span className={classes.bullet}>•</span>;
 
 	const [{ isOver }, drop] = useDrop({
-		accept: "NOTE_CARD",
+    accept: "NOTE_CARD",
+    canDrop: () => { console.log('candrop'); return true; },
 		drop: () => { console.log('drop')},
-		collect: monitor => ({
-			isOver: !!monitor.isOver(),
-		}),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
+    })
 	})
 
   return (
@@ -81,6 +83,21 @@ export default function SimpleCard(props) {
               height: '100%',
             }}
           >
+          {isOver && (
+            <div
+              style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '100%',
+              width: '100%',
+              zIndex: 1,
+              opacity: 0.5,
+              backgroundColor: 'yellow',
+              padding: '10px'
+              }}
+              >Add note to this event...</div>
+            )}
           </div>
         </Grid>
         <Grid item xs={3}>
