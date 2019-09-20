@@ -158,11 +158,11 @@ const Dashboardnew= () => {
       const eventNotesDataResponse = await fetch("/api/event/notes", {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: {
-          eventIds: eventIdsItemsJson.toString()
-        }
+        body: eventIdsItemsJson
       });
       let eventNotesDataJson = await  eventNotesDataResponse.json()
       console.log(`Obtained ${eventNotesDataJson.length} User Event Notes`);

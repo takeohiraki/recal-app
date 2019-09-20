@@ -5,9 +5,8 @@ const fs = require("fs");
 var path = require("path");
 const Sequelize = require("sequelize");
 const models = require("../../models");
-const notes = models.notes;
-const googleCallEventNotes = models.google_cal_event_notes;
-const slackMessages = models.slack_message;
+const notes_Model = models.notes;
+const eventNotes_Model = models.google_cal_event_notes;
 // const auth0_helpers = require('../middleware/auth_helpers')
 
 console.log("ran notes");
@@ -49,9 +48,9 @@ function getRandomInt(min, max) {
 }
 
 router_notes_api.post("/api/event/notes", (req, res) => {
-  var eventIds = req.body.eventIds;
-
-  googleCallEventNotes
+  var eventIds = req.body;
+  
+  eventNotes_Model
     .findAll({
       where: {
         event_id: {
@@ -59,12 +58,12 @@ router_notes_api.post("/api/event/notes", (req, res) => {
         }
       }
     })
-    .then(googleCallEventNotes => {
-      var noteIds = googleCallEventNotes.map(function(item) {
+    .then(eventNotes => {
+      var noteIds = eventNotes.map(function(item) {
         return item.note_id;
       });
 
-      slackMessages
+      notes_Model
         .findAll({
           where: {
             id: {
@@ -72,10 +71,10 @@ router_notes_api.post("/api/event/notes", (req, res) => {
             }
           }
         })
-        .then(slackMessages => {
+        .then(notes => {
           res.status(200).send({
-            event_notes: googleCallEventNotes,
-            messages: slackMessages
+            eventNotes: eventNotes,
+            notes: notes
           });
         });
     });
@@ -165,7 +164,7 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
     }
   ];
 
-  notes
+  notes_Model
     .bulkCreate(notesSeed, {
       updateOnDuplicate: ["id"]
     })
@@ -188,7 +187,7 @@ router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
 router_notes_api.get("/api/notes/get", checkJwt, (req, res) => {
   console.log("api/notes/get");
 
-  notes
+  notes_Model
     .findAll({
       where: {
         user_id: req.user.sub
@@ -210,7 +209,7 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
 
   const { note_text, note_type, user_name, user_id, slack_user_id } = req.body;
 
-  notes
+  notes_Model
     .create({
       note_text: newData.note_text,
       note_type: newData.note_type,
