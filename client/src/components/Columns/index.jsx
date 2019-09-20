@@ -85,6 +85,9 @@ class Content extends Component {
         {
           Array.from(this.props.events).map(event =>
           {
+              var event_note_ids = this.props.eventNotesBundle.eventNotes.filter(en => { return en.event_id == event.id })
+              var event_notes = this.props.eventNotesBundle.notes.filter(n => { return event_note_ids.indexOf(n.id) > 0 })
+              
               return <EventCard 
               key={event.id}
               title={event.event_title}
@@ -94,6 +97,7 @@ class Content extends Component {
               startDt={ event.event_start }
               endDt={ event.event_end }
               attendees={ JSON.parse(event.event_attendees) }
+              notes={ event_notes }
               ></EventCard>
           })
         }

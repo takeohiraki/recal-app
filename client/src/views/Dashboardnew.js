@@ -165,9 +165,12 @@ const Dashboardnew= () => {
         },
         body: eventIdsItemsJson
       });
+
       let eventNotesDataJson = await  eventNotesDataResponse.json()
       console.log(`Obtained ${eventNotesDataJson.eventNotes.length} User Event Notes`);
       setUserEventNotes(eventNotesDataJson);
+
+      console.log(eventNotesDataJson);
 
       setShowResult(true);
      
@@ -307,7 +310,12 @@ const Dashboardnew= () => {
           [classes.contentShift]: open
         })}>
         <div className={classes.drawerHeader} />
-        <Columns addNote={noteAddedEvent} notes={userNotes} events={userEvents} eventNotes={userEventNotes} />
+        {showResult && <Columns 
+            addNote={noteAddedEvent} 
+            notes={userNotes} 
+            events={userEvents} 
+            eventNotesBundle={userEventNotes} 
+        />}
       </main>
     </div>
   

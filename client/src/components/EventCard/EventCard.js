@@ -83,6 +83,11 @@ export default function SimpleCard(props) {
               height: '100%',
             }}
           >
+          {
+            props.notes.map((item, index) => (
+              <div>NOTE EXISTS</div>
+            ))
+          }
           {isOver && (
             <div
               style={{
