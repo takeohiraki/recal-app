@@ -102,6 +102,7 @@ const Dashboardnew= () => {
   const [showResult, setShowResult] = useState(false);
   const [userNotes, setUserNotes] = useState("");
   const [userEvents, setUserEvents] = useState("");
+  const [userEventNotes, setUserEventNotes] = useState("");
 
   const {
     getTokenSilently, user
@@ -165,9 +166,8 @@ const Dashboardnew= () => {
         body: eventIdsItemsJson
       });
       let eventNotesDataJson = await  eventNotesDataResponse.json()
-      console.log(`Obtained ${eventNotesDataJson.length} User Event Notes`);
-      //console.log(eventNotesDataJson);
-      //setUserEvents(eventNotesDataJson);
+      console.log(`Obtained ${eventNotesDataJson.eventNotes.length} User Event Notes`);
+      setUserEventNotes(eventNotesDataJson);
 
       setShowResult(true);
      
@@ -307,7 +307,7 @@ const Dashboardnew= () => {
           [classes.contentShift]: open
         })}>
         <div className={classes.drawerHeader} />
-        <Columns addNote={noteAddedEvent} notes={userNotes} events={userEvents} />
+        <Columns addNote={noteAddedEvent} notes={userNotes} events={userEvents} eventNotes={userEventNotes} />
       </main>
     </div>
   
