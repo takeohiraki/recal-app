@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     event_attendees: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(4000),
       allowNull: true
     },
     calendar_owner_user_id: DataTypes.STRING,
