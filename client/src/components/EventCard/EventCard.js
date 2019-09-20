@@ -41,8 +41,13 @@ export default function SimpleCard(props) {
 
 	const [{ isOver }, drop] = useDrop({
     accept: "NOTE_CARD",
-    canDrop: () => { console.log('candrop'); return true; },
-		drop: () => { console.log('drop')},
+    canDrop: () => { 
+      return true; 
+    },
+		drop: (item) => {
+      props.addNoteToEvent(item.note_id, props.event_id);
+      console.log('Dropped note ' + item.note_id + ' into event ' + props.event_id);
+    },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
@@ -75,6 +80,11 @@ export default function SimpleCard(props) {
           <Typography className={classes.cardTitles} >
             Agenda & Notes
           </Typography>
+          {
+            props.notes.map((item, index) => (
+              <div key={item.id}>{item.note_text}</div>
+            ))
+          }
           <div
             ref={drop}
             style={{
@@ -83,11 +93,6 @@ export default function SimpleCard(props) {
               height: '100%',
             }}
           >
-          {
-            props.notes.map((item, index) => (
-              <div>NOTE EXISTS</div>
-            ))
-          }
           {isOver && (
             <div
               style={{

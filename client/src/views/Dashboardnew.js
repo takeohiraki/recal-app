@@ -209,7 +209,23 @@ const Dashboardnew= () => {
     }
   };
 
-  const noteAddedEvent = (event) => {
+  const noteAddedToEvent = (note_id, event_id) => {
+      console.log(note_id + ' ' + event_id);
+
+      var addedNote = userNotes.filter(n => { return n.id == note_id });
+      var targetEvent = userEvents.filter(e => { return e.id == event_id });
+
+      var newEventNote = {
+        event_id: event_id,
+        note_id: note_id
+      }
+
+      //var existingEventNotes = [...userEventNotes];
+      //existingEventNotes.push(responseData);
+
+  }
+
+  const noteAdded = (event) => {
    
     if(event.key != 'Enter' || event.target.value == '') 
     {
@@ -311,7 +327,8 @@ const Dashboardnew= () => {
         })}>
         <div className={classes.drawerHeader} />
         {showResult && <Columns 
-            addNote={noteAddedEvent} 
+            addNote={noteAdded} 
+            addNoteToEvent={noteAddedToEvent} 
             notes={userNotes} 
             events={userEvents} 
             eventNotesBundle={userEventNotes} 

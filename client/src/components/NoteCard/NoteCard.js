@@ -26,13 +26,11 @@ export default function SimpleCard(props) {
   const classes = useStyles();
 
   const [{isDragging}, drag] = useDrag({
-    item: { type: 'NOTE_CARD' },
+    item: { note_id: props.id, note_text: props.message, type: 'NOTE_CARD' },
 		collect: monitor => ({
 			isDragging: !!monitor.isDragging(),
 		}),
   });
-
-  console.log(props);
 
   return (
     <div
