@@ -286,7 +286,6 @@ let googleCalMethods = {
           const events = res.data.items;
 
           if (events.length) {
-            console.log("resolve");
             resolve(events);
           } else {
             console.log("No upcoming events found.");
@@ -298,8 +297,7 @@ let googleCalMethods = {
   },
   // Create new entries in the DB based on the events that are retrieved from Google
   writeMeetingDB: function (meetingsArr, userId) {
-    console.log("running func writeMeetingDB");
-
+  
     return new Promise(function (resolve, reject) {
       let gCalArr = [];
 

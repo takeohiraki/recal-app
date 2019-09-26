@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Moment from 'react-moment';
+import CancelIcon from '@material-ui/icons/Cancel'
+import CheckIcon from '@material-ui/icons/Check'
+import EmailIcon from '@material-ui/icons/Help'
+
 
 import { useDrop } from 'react-dnd'
 
@@ -119,6 +123,9 @@ export default function SimpleCard(props) {
             {
               props.attendees.map((item, index) => (
                 <li key={item.email}>
+                  {(item.responseStatus == 'accepted') && <CheckIcon></CheckIcon>}
+                  {(item.responseStatus == 'needsAction') && <EmailIcon></EmailIcon>}
+                  {(item.responseStatus == 'rejected') && <CancelIcon></CancelIcon>}
                   {item.email}
                 </li>
               ))
