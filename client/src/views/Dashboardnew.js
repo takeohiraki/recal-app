@@ -213,7 +213,7 @@ const Dashboardnew= () => {
         en.push(responseData.eventNote);
 
         if(n.filter((item, index) => {
-            return n.id == note_id
+            return item.id == note_id
         }).length == 0)
         {
           n.push(addedNote);
