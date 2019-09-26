@@ -180,10 +180,63 @@ const Dashboardnew= () => {
 
   };
 
+  const addEventNoteToDB = async (eventNote) => {
+    try {
+      const token = await getTokenSilently();
+      console.log(`Add Note to Event - ${token.substring(0, 15) + '...'}`);
+
+      const response = await fetch("/api/event/add-note", {
+        method: "post",
+        headers: {
+          'Authorization': `Bearer ${token}`
+          , 'Content-Type': 'application/json'
+          , 'Accept': 'application/json',
+        },
+        body: JSON.stringify(eventNote)
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+
+      if(response.status == 201)
+      {
+
+        var note_id = responseData.eventNote.note_id;
+        var addedNote = userNotes.filter((item, index) => 
+        {
+          return item.id == note_id;
+        })[0];
+
+        var en = [...userEventNotes.eventNotes];
+        var n = [...userEventNotes.notes];
+
+        en.push(responseData.eventNote);
+
+        if(n.filter((item, index) => {
+            return n.id == note_id
+        }).length == 0)
+        {
+          n.push(addedNote);
+        }
+
+        setUserEventNotes({
+          eventNotes: en, 
+          notes: n}
+        );
+
+        //setShowResult(true);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const addNoteToDB = async (newNote) => {
     try {
       const token = await getTokenSilently();
-      console.log("TOKEN: " + token);
+      console.log(`Add Note - ${token.substring(0, 15) + '...'}`);
+
       const response = await fetch("/api/notes/add-note", {
         method: "post",
         headers: {
@@ -209,9 +262,8 @@ const Dashboardnew= () => {
     }
   };
 
-  const noteAddedToEvent = (note_id, event_id) => {
-      console.log(note_id + ' ' + event_id);
-
+  const noteAddedToEvent = async (note_id, event_id) => {
+    
       var addedNote = userNotes.filter(n => { return n.id == note_id });
       var targetEvent = userEvents.filter(e => { return e.id == event_id });
 
@@ -219,6 +271,8 @@ const Dashboardnew= () => {
         event_id: event_id,
         note_id: note_id
       }
+
+      addEventNoteToDB(newEventNote);
 
       //var existingEventNotes = [...userEventNotes];
       //existingEventNotes.push(responseData);

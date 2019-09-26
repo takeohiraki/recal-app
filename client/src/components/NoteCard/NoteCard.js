@@ -10,7 +10,6 @@ import { useDrag } from 'react-dnd';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275,
     marginTop: '20px'
   },
   title: {

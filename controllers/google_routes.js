@@ -118,7 +118,7 @@ router_google.get("/api/google/seed_experimental", checkJwt, (req, res) => {
     });
 });*/
 
-router_google.post("/api/event/add-note", checkJwt, function(req, res) {
+/*router_google.post("/api/event/add-note", checkJwt, function(req, res) {
   googleCallEventNotes
     .create({
       event_id: req.body.event_id,
@@ -127,7 +127,7 @@ router_google.post("/api/event/add-note", checkJwt, function(req, res) {
     .then(function(affectedRows) {
       res.sendStatus(200).send(affectedRows);
     });
-});
+});*/
 
 router_google.delete("/api/google/delete-event", function(req, res) {
   googleCalEventsDB
