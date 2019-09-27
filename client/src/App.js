@@ -51,6 +51,7 @@ import Home from "./views/Home";
 import Privacy from "./views/Privacy";
 import AgendaSubmission from "./views/AgendaSubmission";
 import LandingPage from "./views/LandingPage/LandingPage";
+import AgendaForm from "./views/AgendaForm";
 
 // LIB
 import { useAuth0 } from "./react-auth0-spa";
@@ -229,7 +230,8 @@ const App = () => {
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/home" component={Dashboardnew} />
                 <PrivateRoute path="/profile" component={Profile} />
-                <PrivateRoute path="/external-api" component={ExternalApi} />
+                <Route path="/external-api" component={ExternalApi} />
+                <Route path="/agenda-form" component={AgendaForm} />
               </Switch>
             </main>
           </div>
