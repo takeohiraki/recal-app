@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import logo from "../../assets/dark.png";
+import "./style.css";
 
 import {
   Collapse,

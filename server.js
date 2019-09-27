@@ -74,6 +74,9 @@ app.use(notes_routes);
 var slack_routes = require("./routes/api/slack.js");
 app.use(slack_routes);
 
+var mailer_routes = require("./routes/api/mailer.js");
+app.use(mailer_routes);
+
 
 /* 
 app.use(express.json({
@@ -114,8 +117,8 @@ app.use(routes_main);*/
 app.use(slack_routes); */
 
 // Routes for handling Google data
-/* var google_routes = require("./controllers/google_routes.js");
-app.use(google_routes); */
+//var google_routes = require("./controllers/google_routes.js");
+//app.use(google_routes); 
 
 // Routes for handling email data
 var email_routes = require("./controllers/email_routes.js");

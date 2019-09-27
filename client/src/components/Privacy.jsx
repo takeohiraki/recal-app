@@ -1,7 +1,8 @@
 import React from "react";
+import "./style.css";
 
 const Privacy = () => (
-    <div className="container">
+    <div className="container greybackground">
         <h1>Privacy Policy</h1>
 
 

@@ -4,7 +4,9 @@ var passport = require("passport");
 const fs = require("fs");
 var path = require("path");
 const Sequelize = require("sequelize");
-const { google } = require("googleapis");
+const {
+  google
+} = require("googleapis");
 const models = require("../../models");
 const googleCalEventsDB = models.calendar_events;
 // const auth0_helpers = require('../middleware/auth_helpers')
@@ -151,41 +153,65 @@ router_google.get("/api/seed/google_cal", checkJwt, (req, res) => {
 // pulls calendar events for a valid session
 /////////////////////////////////////////////////////////////////
 router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["openid", "profile", "email"]), (req, res) => {
-    console.log("api/fetch_google_calendar_events");
+  console.log("api/fetch_google_calendar_events");
 
-    // Step 1: get user info
-    // Step 2: try to get calendar
-    // Step 2a: if you CANNOT get calendar, call refreshToken
-    // Step 2a-1: once you get the refreshToken, try to get calendar again
-    // NOT IMPLEMENTED YET Step 2b-2: if you still can't get the calendar, have the user login
-    // Step 3: write to the calendar
-    // Step 4: pull the calendar
-    console.log("async getCalendar");
+  // Step 1: get user info
+  // Step 2: try to get calendar
+  // Step 2a: if you CANNOT get calendar, call refreshToken
+  // Step 2a-1: once you get the refreshToken, try to get calendar again
+  // NOT IMPLEMENTED YET Step 2b-2: if you still can't get the calendar, have the user login
+  // Step 3: write to the calendar
+  // Step 4: pull the calendar
+  console.log("async getCalendar");
 
-    getCalendar();
+  getCalendar();
 
-    async function getCalendar() {
-      try {
-        // Step 1: get user info
-        var userInfo = await axios.get(
-          "https://dawn-moon-0315.auth0.com/userinfo",
-          {
-            headers: {
-              Authorization: req.headers.authorization
-            }
+  async function getCalendar() {
+    try {
+      // Step 1: get user info
+      var userInfo = await axios.get(
+        "https://dawn-moon-0315.auth0.com/userinfo", {
+          headers: {
+            Authorization: req.headers.authorization
           }
-        );
-      } catch (err) {
-        console.log("failed getCalendar" + err);
-      }
+        }
+      );
+    } catch (err) {
+      console.log("failed getCalendar" + err);
+    }
 
-      let user_identities = JSON.parse(userInfo.data["http://www.recal.com/user_identities"]);
-      let google_access_token = user_identities[0].access_token;
-      let google_refresh_token = user_identities[0].refresh_token;
-      let userId = userInfo.data.sub;
-      console.log("GOOGLE ACCESS TOKEN: " + google_access_token);
-      console.log("GOOGLE REFRESH TOKEN: " + google_refresh_token);
-      console.log("UserId: " + userInfo.data.sub);
+    let user_identities = JSON.parse(userInfo.data["http://www.recal.com/user_identities"]);
+    let google_access_token = user_identities[0].access_token;
+    let google_refresh_token = user_identities[0].refresh_token;
+    let userId = userInfo.data.sub;
+    console.log("GOOGLE ACCESS TOKEN: " + google_access_token);
+    console.log("GOOGLE REFRESH TOKEN: " + google_refresh_token);
+    console.log("UserId: " + userInfo.data.sub);
+
+    let oAuth2Client = new google.auth.OAuth2(
+      keys.googleClient,
+      keys.googleSecret,
+      "http://localhost:3000/auth/google/callback"
+    );
+
+    oAuth2Client.setCredentials({
+      access_token: google_access_token
+    });
+
+    // Step 2: try to get calendar
+    try {
+      var events = await googleCalMethods.getEventsFromGoogle(oAuth2Client);
+    } catch (err) {
+      console.log("failed getEventsFromGoogle 1" + err);
+    }
+
+    // Step 2a: if you CANNOT get calendar, call refreshToken
+    if (events == "error") {
+      console.log("async refreshGoogleToken");
+      let refreshedAccessToken = await googleCalMethods.refreshGoogleToken(
+        google_refresh_token
+      );
+      console.log(refreshedAccessToken);
 
       let oAuth2Client = new google.auth.OAuth2(
         keys.googleClient,
@@ -194,46 +220,20 @@ router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["open
       );
 
       oAuth2Client.setCredentials({
-        access_token: google_access_token
+        access_token: refreshedAccessToken
       });
 
-      // Step 2: try to get calendar
-      try {
-        var events = await googleCalMethods.getEventsFromGoogle(oAuth2Client);
-      } catch (err) {
-        console.log("failed getEventsFromGoogle 1" + err);
-      }
-
-      // Step 2a: if you CANNOT get calendar, call refreshToken
-      if (events == "error") {
-        console.log("async refreshGoogleToken");
-        let refreshedAccessToken = await googleCalMethods.refreshGoogleToken(
-          google_refresh_token
-        );
-        console.log(refreshedAccessToken);
-
-        let oAuth2Client = new google.auth.OAuth2(
-          keys.googleClient,
-          keys.googleSecret,
-          "http://localhost:3000/auth/google/callback"
-        );
-
-        oAuth2Client.setCredentials({
-          access_token: refreshedAccessToken
-        });
-
-        // Step 2a-1: once you get the refreshToken, try to get calendar again
-        events = await googleCalMethods.getEventsFromGoogle(oAuth2Client);
-      }
-
-      // Step 3: write to the calendar
-      await googleCalMethods.writeMeetingDB(events, userId);
-
-      // Step 4: pull the calendar
-      return googleCalMethods.displayEvents(res, userId);
+      // Step 2a-1: once you get the refreshToken, try to get calendar again
+      events = await googleCalMethods.getEventsFromGoogle(oAuth2Client);
     }
+
+    // Step 3: write to the calendar
+    await googleCalMethods.writeMeetingDB(events, userId);
+
+    // Step 4: pull the calendar
+    return googleCalMethods.displayEvents(res, userId);
   }
-);
+});
 
 /////////////////////////////////////////////////////////////////
 // Helper functions for pulling, writing, and displaying events
@@ -241,36 +241,39 @@ router_google.get("/api/fetch_google_calendar_events", checkJwt, jwtAuthz(["open
 // Reminder: Move this somewhere else (helper file?)
 let googleCalMethods = {
   // Pull events from DB
-  displayEvents: function(res, user_id) {
+  displayEvents: function (res, user_id) {
     console.log("running func displayEvents");
     googleCalEventsDB
       .findAll({
         where: {
           calendar_owner_user_id: user_id
         },
-        order: [["createdAt", "DESC"]]
+        order: [
+          ["createdAt", "DESC"]
+        ]
       })
       .then(googleCalEvents => {
         res.status(200).send(googleCalEvents);
       });
   },
   // Pulls calendar events from Google
-  getEventsFromGoogle: function(auth) {
+  getEventsFromGoogle: function (auth) {
     console.log("run func getEventsFromGoogle");
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       const calendar = google.calendar({
         version: "v3",
         auth
       });
-      calendar.events.list(
-        {
+      calendar.events.list({
           calendarId: "primary",
           // timeMin: (new Date()).toISOString(),
           timeMin: new Date().toISOString(),
           maxResults: 10,
           singleEvents: true,
-          orderBy: "startTime"
+          orderBy: "startTime",
+          alwaysIncludeEmail: true,
+          maxAttendees: 100
         },
         (err, res) => {
           // if (err) return console.log("The API returned an error: " + err);
@@ -279,11 +282,10 @@ let googleCalMethods = {
             console.log("The API returned an error: " + err);
             resolve("error");
           }
-          console.log("res.data.items");
+
           const events = res.data.items;
 
           if (events.length) {
-            console.log("resolve");
             resolve(events);
           } else {
             console.log("No upcoming events found.");
@@ -294,14 +296,19 @@ let googleCalMethods = {
     });
   },
   // Create new entries in the DB based on the events that are retrieved from Google
-  writeMeetingDB: function(meetingsArr, userId) {
-    console.log("running func writeMeetingDB");
-
-    return new Promise(function(resolve, reject) {
+  writeMeetingDB: function (meetingsArr, userId) {
+  
+    return new Promise(function (resolve, reject) {
       let gCalArr = [];
 
-      meetingsArr.forEach(function(element) {
+      meetingsArr.forEach(function (element) {
+        var attendees = [];
+        if(element.attendees !== undefined)
+        {
+            attendees = element.attendees;
+        }
         gCalArr.push({
+          event_attendees: JSON.stringify(attendees),
           google_cal_event_id: element.id,
           recurring_event_id: element.recurringEventId || null,
           calendar_owner_user_id: userId,
@@ -332,12 +339,12 @@ let googleCalMethods = {
         .then(([affectedCount, affectedRows]) => {
           resolve(affectedCount);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(data);
         });
     });
   },
-  refreshGoogleToken: async function(refreshToken) {
+  refreshGoogleToken: async function (refreshToken) {
     console.log("running func refreshGoogleToken");
 
     var clientSecret = keys.googleClient;
@@ -353,7 +360,7 @@ let googleCalMethods = {
       "&grant_type=refresh_token&redirect_url=http://localhost:3000/callback";
 
     // gets the refresh token and returns it to conclude the function
-    return await axios.post(url).then(function(response) {
+    return await axios.post(url).then(function (response) {
 
       return response.data.access_token;
 

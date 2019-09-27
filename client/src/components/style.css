@@ -1,0 +1,54 @@
+.spinner {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.image1login,
+.image2login {
+    width: 600px;
+    height: 500px;
+    border: 2px solid rgb(196, 196, 196);
+}
+
+.image1login {
+    opacity: 0.7;
+    margin-top: 70px;
+    z-index: 1;
+}
+
+.image2login {
+    position: relative;
+    bottom: 250px;
+    left: 200px;
+    z-index: 2;
+    opacity: 0.9;
+}
+
+.greenbtnmargin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    margin-left: 50px;
+}
+
+#smallerfontgreenbtn {
+    font-size: 10px;
+    color: white;
+}
+
+.spacedivider {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.greybackground {
+    background-color: lightgrey;
+}
