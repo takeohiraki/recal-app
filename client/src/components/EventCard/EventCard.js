@@ -10,7 +10,7 @@ import Moment from 'react-moment';
 import CancelIcon from '@material-ui/icons/Cancel'
 import CheckIcon from '@material-ui/icons/Check'
 import EmailIcon from '@material-ui/icons/Help'
-
+import Avatar from '@material-ui/core/Avatar';
 
 import { useDrop } from 'react-dnd'
 

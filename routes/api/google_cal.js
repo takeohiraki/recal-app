@@ -282,7 +282,7 @@ let googleCalMethods = {
             console.log("The API returned an error: " + err);
             resolve("error");
           }
-          console.log("res.data.items");
+
           const events = res.data.items;
 
           if (events.length) {

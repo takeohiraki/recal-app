@@ -1,196 +1,184 @@
-import React, { useState } from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, {
+  Fragment,
+  useState,
+  useEffect 
+} from "react";
+
 import logo from "../../assets/dark.png";
-import "./style.css";
 
+import clsx from "clsx";
 import {
-  Collapse,
-  Container,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+  useAuth0
+} from "../../react-auth0-spa";
 
-import { useAuth0 } from "../../react-auth0-spa";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import Link from '@material-ui/core/Link';
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
+  }
+}));
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  const toggle = () => setIsOpen(!isOpen);
 
-  const logoutWithRedirect = () =>
+  /*const logoutWithRedirect = () =>
     logout({
       returnTo: window.location.origin
-    });
+    });*/
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <div className="nav-container">
-      <Navbar color="light" light expand="md">
-        <Container>
-          <NavbarBrand className="logo" />
-          <NavbarToggler onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem className="logorecal">
-                <NavLink
-                  tag={RouterNavLink}
-                  to="/home"
-                  exact
-                  activeClassName="router-link-exact-active"
-                >
-                  <img src={logo} alt="Recal" width="100" />
-                </NavLink>
-              </NavItem>
-              {isAuthenticated && (
-                <NavItem
-                  className="greenbtnmargin navbarbtn"
-                >
-                  <NavLink
-                    tag={RouterNavLink}
-                    to="/external-api"
-                    exact
-                    activeClassName="router-link-exact-active"
-                    id="qsLoginBtn"
-                    className="waves-effect waves-light btn"
-                  >
-                    <p id="smallerfontgreenbtn">External API</p>
-                  </NavLink>
-                </NavItem>
-              )}
-              {isAuthenticated && (
-                <NavItem
-                  className="greenbtnmargin"
-                >
-                  <NavLink
-                    tag={RouterNavLink}
-                    to="/dashboard"
-                    exact
-                    activeClassName="router-link-exact-active"
-                    id="qsLoginBtn"
-                    className="waves-effect waves-light btn"
-                  >
-                    <p id="smallerfontgreenbtn">Dashboard</p>
-                  </NavLink>
-                </NavItem>
-              )}
-            </Nav>
-            <Nav className="d-none d-md-block" navbar>
-              {!isAuthenticated && (
-                <NavItem>
-                  <Button
-                    id="qsLoginBtn"
-                    className="waves-effect waves-light btn"
-                    onClick={() =>
-                      loginWithRedirect({
-                        access_type: "offline",
-                        // Reminder: may need to add more scopes
-                        // connection_scope: "https://www.googleapis.com/auth/calendar.events.readonly",
-                        // approval_prompt: "force"
-                      })
-                    }
-                  >
-                    Log in
-                  </Button>
-                </NavItem>
-              )}
-              {isAuthenticated && (
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret id="profileDropDown">
-                    <img
-                      src={user.picture}
-                      alt="Profile"
-                      className="nav-user-profile rounded-circle"
-                      width="50"
-                    />
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem header><span id="username">{user.name}</span></DropdownItem>
-                    <DropdownItem
-                      tag={RouterNavLink}
-                      to="/profile"
-                      className="dropdown-profile"
-                      activeClassName="router-link-exact-active"
-                    >
-                      <FontAwesomeIcon icon="user" className="mr-3" /><span id="profilebtn"> Profile</span>
-                    </DropdownItem>
-                    <DropdownItem
-                      id="qsLogoutBtn"
-                      onClick={() => logoutWithRedirect()}
-                    >
-                      <FontAwesomeIcon icon="power-off" className="mr-3" /><span id ="logoutbtn"> Log
-                      out</span> 
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              )}
-            </Nav>
-            {!isAuthenticated && (
-              <Nav className="d-md-none" navbar>
-                <NavItem>
-                  <Button
-                    id="qsLoginBtn"
-                    className="waves-effect waves-light btn"
-                    block
-                    onClick={() => loginWithRedirect({})}
-                  >
-                    Log in
-                  </Button>
-                </NavItem>
-              </Nav>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
+      >
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          className={clsx(classes.menuButton, open && classes.hide)}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" noWrap>
+          Dashboard
+        </Typography>
+      </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <Link to="/home"><img src={logo} alt="Recal" width="100" /></Link>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
             )}
-            {isAuthenticated && (
-              <Nav
-                className="d-md-none justify-content-between"
-                navbar
-                style={{ minHeight: 170 }}
-              >
-                <NavItem>
-                  <span className="user-info">
-                    <img
-                      src={user.picture}
-                      alt="Profile"
-                      className="nav-user-profile d-inline-block rounded-circle mr-3"
-                      width="50"
-                    />
-                    <h6 
-                      className="d-inline-block username"
-                      style={{ textcolor: "rgb(253, 155, 91)" }}
-                    >{user.name}</h6>
-                  </span>
-                </NavItem>
-                <NavItem>
-                  <FontAwesomeIcon icon="user" className="mr-3" />
-                  <RouterNavLink
-                    to="/profile"
-                    activeClassName="router-link-exact-active"
-                  >
-                    Profile
-                  </RouterNavLink>
-                </NavItem>
-                <NavItem>
-                  <FontAwesomeIcon icon="power-off" className="mr-3" />
-                  <RouterNavLink
-                    to="#"
-                    id="qsLogoutBtn"
-                    onClick={() => logoutWithRedirect()}
-                  >
-                    Log out
-                  </RouterNavLink>
-                </NavItem>
-              </Nav>
-            )}
-          </Collapse>
-        </Container>
-      </Navbar>
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {[
+          {"Label": "Home", "LinkHref": "/Home"}, 
+          {"Label": "External Api", "LinkHref": "/External-Api"}, 
+          {"Label": "Dashboard", "LinkHref": "/Dashboard"}
+          ].map((item, index) => (
+            <ListItem button component="a" href={item.LinkHref} key={item.Label}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={item.Label} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {[  {"Label": "Calendar", "LinkHref": "/"}, 
+          {"Label": "Project", "LinkHref": "/"}
+          ].map((item, index) => (
+            <ListItem button component="a" href={item.LinkHref} key={item.Label}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={item.Label} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </div>
   );
 };
