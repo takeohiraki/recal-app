@@ -74,6 +74,9 @@ app.use(notes_routes);
 var slack_routes = require("./routes/api/slack.js");
 app.use(slack_routes);
 
+var mailer_routes = require("./routes/api/mailer.js");
+app.use(mailer_routes);
+
 
 /* 
 app.use(express.json({
