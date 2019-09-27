@@ -5,7 +5,6 @@ const PrivacyPage = () => (
   <Fragment>
    <Privacy />
   </Fragment>
-
 );
 
 export default PrivacyPage;

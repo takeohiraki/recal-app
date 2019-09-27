@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
 import { useDrag } from 'react-dnd';
+import CancelIcon from '@material-ui/icons/Cancel'
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
   card: {
@@ -19,6 +21,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  deleteIcon: {
+    verticalAlign: 'top'
+  }
 });
 
 export default function SimpleCard(props) {
@@ -43,9 +48,19 @@ export default function SimpleCard(props) {
     >
       <Card className={classes.card}>
         <CardContent>
-          <Typography  className={classes.title} variant="h5" component="h3">
-              #{props.message}
-          </Typography>
+          <Grid
+              justify="space-between" // Add it here :)
+              container 
+            >
+            <Grid item>
+              <Typography className={classes.title} variant="h5" component="h3">
+                  #{props.message}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <CancelIcon className={classes.deleteIcon}></CancelIcon>
+            </Grid>
+          </Grid>
           <Typography variant="body2" component="p">
               Created on&nbsp;
               <Moment format="DD-MM-YYYY HH:mm A">
@@ -54,7 +69,6 @@ export default function SimpleCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
         </CardActions>
       </Card>
     </div>
