@@ -135,7 +135,7 @@ export default function SimpleCard(props) {
       </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+      
       </CardActions>
     </Card>
   );
