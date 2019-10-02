@@ -158,6 +158,10 @@ const Dashboardnew= () => {
       var existingNotes = [...userNotes];
       existingNotes.push(responseData);
   
+      existingNotes.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
       setUserNotes(existingNotes);
       console.log(existingNotes);
 
