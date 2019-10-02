@@ -72,6 +72,7 @@ class Content extends Component {
               message={ note.note_text } 
               created={ note.createdAt }
               username={ note.user_name }
+              deleteNote={ this.props.deleteNote }
               ></NoteCard>
           })
         }

@@ -22,7 +22,8 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   deleteIcon: {
-    verticalAlign: 'top'
+    verticalAlign: 'top',
+    cursor: 'Pointer'
   }
 });
 
@@ -58,7 +59,8 @@ export default function SimpleCard(props) {
               </Typography>
             </Grid>
             <Grid item>
-              <CancelIcon className={classes.deleteIcon}></CancelIcon>
+              <CancelIcon className={classes.deleteIcon}
+              onClick={(e) => props.deleteNote(e, props.id)}></CancelIcon>
             </Grid>
           </Grid>
           <Typography variant="body2" component="p">

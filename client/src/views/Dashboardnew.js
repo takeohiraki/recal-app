@@ -4,6 +4,8 @@ import React, {
   useEffect 
 } from "react";
 
+import Axios from 'axios';
+
 import Columns from "../components/Columns/index";
 import {
   useAuth0
@@ -163,12 +165,62 @@ const Dashboardnew= () => {
       });
 
       setUserNotes(existingNotes);
-      console.log(existingNotes);
 
     } catch (error) {
       console.error(error);
     }
   };
+
+  const deleteNoteInDB = async (note_id) => {
+
+    try {
+      const token = await getTokenSilently();
+      console.log(`Delete Note - ${token.substring(0, 15) + '...'}`);
+
+      /*const response = await fetch("/api/note/delete", {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+          , 'Content-Type': 'application/json'
+          , 'Accept': 'application/json',
+        },
+        body: note_id
+      });*/
+
+      const response = await Axios.post('/api/note/delete', 
+      {
+        note_id: note_id
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      const responseData = await response;
+
+      console.log(responseData);
+
+      if(response.status == 200)
+      {
+        var existingNotes = [...userNotes];
+        existingNotes = existingNotes.filter((item, index) => {
+          return item.id != note_id
+        });
+    
+        existingNotes.sort(function(a,b){
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+
+        setUserNotes(existingNotes);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
 
   const noteAddedToEvent = async (note_id, event_id) => {
     
@@ -184,6 +236,15 @@ const Dashboardnew= () => {
 
       //var existingEventNotes = [...userEventNotes];
       //existingEventNotes.push(responseData);
+
+  }
+
+  const noteDeleted = (event, noteId) => {
+
+
+    console.log('NOTE_ID:' + noteId);
+
+    deleteNoteInDB(noteId);
 
   }
 
@@ -215,6 +276,7 @@ const Dashboardnew= () => {
     {showResult && <Columns 
         addNote={noteAdded} 
         addNoteToEvent={noteAddedToEvent} 
+        deleteNote={noteDeleted}
         notes={userNotes} 
         events={userEvents} 
         eventNotesBundle={userEventNotes} 
