@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
+import MaterialTable from 'material-table';
 
 import {
     useAuth0
@@ -26,39 +27,70 @@ import {
     makeStyles
 } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles(theme => ({
     title: {
         fontSize: 18,
         textDecoration: 'underline'
     },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
     root: {
-        padding: '2px 4px',
+        flex: 1,
+        padding :'2px 4px',
         display: 'flex',
         alignItems: 'center',
         width: 400,
-      },
-      input: {
+    },
+    input: {
         marginLeft: 1,
         flex: 1,
-      },
-      iconButton: {
+    },
+    iconButton: {
         padding: 10,
-      },
-      textField: {
-        marginLeft: 1,
-        marginRight: 1,
-      },
-      dense: {
-        marginTop: 2,
-      },
-});
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 800
+    },
+    dense: {
+        marginTop: theme.spacing(2),
+    }
+}));
 
 const Settings = () => {
 
     const classes = useStyles();
 
+    const [state, setState] = React.useState({
+        columns: [
+          { title: 'Name', field: 'name' },
+          { title: 'Surname', field: 'surname' },
+          { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+          {
+            title: 'Birth Place',
+            field: 'birthCity',
+            lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+          },
+        ],
+        data: [
+          { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+          {
+            name: 'Zerya Betül',
+            surname: 'Baran',
+            birthYear: 2017,
+            birthCity: 34,
+          },
+        ],
+      });
+
     return ( 
+     
         <Fragment >
+
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography className={classes.title} >
@@ -89,39 +121,58 @@ const Settings = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-     
+                    <Paper className={classes.root}>
+                        <InputBase
+                            id="outlined-multiline-static"
+                            label="Add Note"
+                            multiline
+                            className={classes.textField}      
+                            placeholder="Type an email..."
+                            inputProps={{ 'aria-label': 'Type an email' }}
+                        />
+                        <IconButton className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                <MaterialTable
+                        title="Editable Example"
+                        columns={state.columns}
+                        data={state.data}
+                        editable={{
+                            onRowAdd: newData =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data.push(newData);
+                                setState({ ...state, data });
+                                }, 600);
+                            }),
+                            onRowUpdate: (newData, oldData) =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data[data.indexOf(oldData)] = newData;
+                                setState({ ...state, data });
+                                }, 600);
+                            }),
+                            onRowDelete: oldData =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data.splice(data.indexOf(oldData), 1);
+                                setState({ ...state, data });
+                                }, 600);
+                            }),
+                        }}
+                    />
                 </Grid>
             </Grid>
-
-            <Paper className={classes.root}>
-                    <InputBase
-                        className={classes.input}
-                        placeholder="Type an email..."
-                        inputProps={{ 'aria-label': 'Type an email' }}
-                    />
-                    <IconButton className={classes.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
-                </Paper>
-                <TextField
-                    id="outlined-dense"
-                    label="Dense"
-                    className={clsx(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                />
-
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Add Note"
-                
-                  className={classes.textField}
-                  style={{ margin: 0, marginTop: 8 }}
-                  margin="normal"
-                  variant="outlined"
-
-                />
-
+  
         </Fragment>
     );
 
