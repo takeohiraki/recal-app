@@ -45,6 +45,7 @@ import Dashboard from "./views/Dashboard";
 import Dashboardnew from "./views/Dashboardnew";
 import Profile from "./views/Profile";
 import ExternalApi from "./components/manual_triggers/ExternalApi";
+import Settings from "./views/Settings";
 
 // DOES NOT REQUIRE AUTH
 import Home from "./views/Home";
@@ -207,7 +208,7 @@ const App = () => {
             <Divider />
             <List>
               {[  {"Label": "Calendar", "LinkHref": "/"}, 
-              {"Label": "Project", "LinkHref": "/"}
+              {"Label": "Settings", "LinkHref": "/Settings"}
               ].map((item, index) => (
                 <ListItem button component="a" href={item.LinkHref} key={item.Label}>
                   <ListItemIcon>
@@ -230,8 +231,8 @@ const App = () => {
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/home" component={Dashboardnew} />
                 <PrivateRoute path="/profile" component={Profile} />
-                <Route path="/external-api" component={ExternalApi} />
-                <Route path="/agenda-form" component={AgendaForm} />
+                <PrivateRoute path="/settings" component={Settings} />
+                <PrivateRoute path="/external-api" component={ExternalApi} />
               </Switch>
             </main>
           </div>

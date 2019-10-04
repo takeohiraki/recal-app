@@ -68,9 +68,7 @@ router_notes_api.post("/api/event/add-note", function (req, res) {
               eventNote: newEventNote
             });
           });
-      }
-      else
-      {
+      } else {
         res.status(200).send({
           eventNote: existingEventNote
         });
@@ -113,10 +111,32 @@ router_notes_api.post("/api/event/notes", (req, res) => {
 });
 
 /////////////////////////
+// MARK NOTE AS DELETED
+/////////////////////////
+router_notes_api.post("/api/note/delete", checkJwt, (req, res) => {
+
+  notes_Model.findOne({
+    where: {
+      id: req.body.note_id
+    }
+  }).then(note => {
+    if (note) {
+      note.update({
+        deleted: '1'
+      }).then((rowsUpdated) => {
+        res.status(200).send(rowsUpdated);
+      })
+    }
+  }).catch(err => {
+    console.log("Error while creating note: ", err);
+  });
+
+});
+
+/////////////////////////
 // Seed the notes table
 /////////////////////////
 router_notes_api.get("/api/seed/notes", checkJwt, (req, res) => {
-  console.log("api/seed/notes");
 
   var notesSeed = [{
       note_text: "Complete MaintMax Design",
@@ -181,7 +201,8 @@ router_notes_api.get("/api/notes/get", checkJwt, (req, res) => {
   notes_Model
     .findAll({
       where: {
-        user_id: req.user.sub
+        user_id: req.user.sub,
+        deleted: '0'
       },
       order: [
         ["createdAt", "DESC"]
@@ -196,7 +217,6 @@ router_notes_api.get("/api/notes/get", checkJwt, (req, res) => {
 // Create a note
 /////////////////////////
 router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
-  console.log("api/notes/add-note");
 
   var newData = req.body;
 
@@ -224,18 +244,5 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
     });
 });
 
-/* 
-router_slack.delete("/api/slack/delete-agenda", function(req, res) {
-  slackMessages
-    .destroy({
-      where: {
-        id: req.body.id
-      }
-    })
-    .then(function(affectedRows) {
-      res.sendStatus(200).send(affectedRows);
-    });
-});
- */
 
 module.exports = router_notes_api;
