@@ -225,7 +225,8 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
     note_type,
     user_name,
     user_id,
-    slack_user_id
+    slack_user_id,
+
   } = req.body;
 
   notes_Model
@@ -234,7 +235,8 @@ router_notes_api.post("/api/notes/add-note", checkJwt, (req, res) => {
       note_type: newData.note_type,
       user_name: newData.user_name,
       user_id: newData.user_id,
-      slack_user_id: newData.slack_user_id
+      slack_user_id: newData.slack_user_id,
+      deleted: 0
     })
     .then(newNote => {
       res.status(201).send(newNote);
