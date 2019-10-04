@@ -63,29 +63,27 @@ function CustomInput({ ...props }) {
     formControlClasses = classes.formControl;
   }
   return (
-    <FormControl {...formControlProps} className={formControlClasses}>
-      {labelText !== undefined ? (
-        <InputLabel
-          className={classes.labelRoot + " " + labelClasses}
-          htmlFor={id}
-          {...labelProps}
-        >
-          {labelText}
-        </InputLabel>
-      ) : null}
-      <Input {...props}
-        classes={{
-          input: inputClasses,
-          root: marginTop,
-          disabled: classes.disabled,
-          // underline: underlineClasses
-        }}
-        id={id}
-        {...inputProps}
-      />
-      
-    </FormControl>
+
+// This file exports the Input, TextArea, and FormBtn components
+
+/*     <div className="form-group">
+      <input className="form-control" {...props} />
+    </div> */
+
+<InputLabel
+  className={classes.labelRoot + " " + labelClasses}
+  htmlFor={id}
+  {...labelProps}
+  >
+      <div className="form-group">
+      <input className="form-control" {...props} />
+    </div>
+  {labelText}
+</InputLabel>
+
+
   );
+
 }
 
 CustomInput.propTypes = {

@@ -10,7 +10,7 @@ const ExternalApi = () => {
     try {
       const token = await getTokenSilently();
       console.log('TOKEN: ' + token);
-      const response = await fetch("/api/external", {
+      const response = await fetch("/api/email/read", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -30,7 +30,7 @@ const ExternalApi = () => {
   return (
     <>
       <button onClick={callApi}>Ping External API</button>
-      {showResult && <code>{JSON.stringify(apiMessage, null, 2)}</code>}
+      
     </>
   );
 };
