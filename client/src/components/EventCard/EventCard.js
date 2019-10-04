@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Moment from 'react-moment';
+import MomentJs from 'moment';
 import CancelIcon from '@material-ui/icons/Cancel'
 import CheckIcon from '@material-ui/icons/Check'
 import EmailIcon from '@material-ui/icons/Help'
@@ -17,7 +18,7 @@ import { useDrop } from 'react-dnd'
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
-    marginTop: '20px'
+    marginTop: '10px'
   },
   bullet: {
     display: 'inline-block',

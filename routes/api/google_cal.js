@@ -273,7 +273,7 @@ let googleCalMethods = {
           calendarId: "primary",
           timeMin: new Date().toISOString(),
           timeMax: dateMax,
-          maxResults: 10,
+          //maxResults: 10,
           singleEvents: true,
           orderBy: "startTime",
           alwaysIncludeEmail: true,

@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import PropTypes from 'prop-types';
+import Moment from "moment";
 
 import ExternalApi from "../manual_triggers/ExternalApi.js";
 import SeedCal from "../manual_triggers/SeedCal.js";
@@ -17,6 +18,8 @@ import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+//import Moment from 'react-moment';
+
 
 import "./style.css";
 
@@ -46,6 +49,12 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+  },
+  eventDayTitle: 
+  {
+    fontSize: 25,
+    textDecoration: 'underline',
+    marginTop: 20
   }
 });
 
@@ -62,7 +71,6 @@ class Content extends Component {
     {
       NoteCards = 
       <div>
-        <Typography></Typography>
         {
           Array.from(this.props.notes).map(note =>
           {
@@ -81,6 +89,7 @@ class Content extends Component {
 
     if(this.props.events)
     {
+      let previousDay_Month_Year = "";
       EventCards = 
       <div>
         {
@@ -90,8 +99,36 @@ class Content extends Component {
               var event_notes = this.props.eventNotesBundle.notes.filter(n => { 
                 return event_note_ids.indexOf(n.id) > -1 
               });
-              
-              return <EventCard 
+
+              var eventDayTitleText = '';
+              let eventDate = new Date(event.event_start);
+              let today = new Date();
+              let tomorrow = new Date();
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              let  currentDay_Month_Year = eventDate.getDate() + "__" + eventDate.getMonth() + "__" + eventDate.getYear();
+
+              if(eventDate.getDate() == today.getDate()
+              && eventDate.getMonth() == today.getMonth()
+              && eventDate.getYear() == today.getYear())
+              {
+                eventDayTitleText = "Today"
+              }
+              else if(eventDate.getDate() == tomorrow.getDate()
+              && eventDate.getMonth() == tomorrow.getMonth()
+              && eventDate.getYear() == tomorrow.getYear())
+              {
+                eventDayTitleText = "Tomorrow"
+              }
+              else
+              {
+                eventDayTitleText = eventDate.toDateString();
+              }
+
+              var EventFragment = <Fragment key={event.id}>
+                {(currentDay_Month_Year != previousDay_Month_Year) && <Typography className={classes.eventDayTitle}>
+                  { eventDayTitleText /*+ '(' + eventDate.toDateString() + ')'*/} 
+                </Typography>}
+                <EventCard 
                 key={event.id}
                 event_id={event.id}
                 title={event.event_title}
@@ -103,7 +140,11 @@ class Content extends Component {
                 attendees={ JSON.parse(event.event_attendees) }
                 notes={ event_notes }
                 addNoteToEvent= { this.props.addNoteToEvent }
-              ></EventCard>
+              ></EventCard></Fragment>
+
+              previousDay_Month_Year = eventDate.getDate() + "__" + eventDate.getMonth() + "__" + eventDate.getYear();
+              
+              return EventFragment;
           })
         }
       </div>
@@ -117,7 +158,7 @@ class Content extends Component {
         
           <Grid container spacing={3}>
             <Grid item xs={3}>
-                <Typography variant="h4" gutterBottom>
+                <Typography className={classes.cardTitles}>
                   Your Notes
                 </Typography>
                 <TextField

@@ -53,6 +53,9 @@ const Dashboardnew= () => {
 
       let eventsDataJson = await  eventsDataResponse.json()
       console.log(`Obtained ${eventsDataJson.length} User Events`);
+      eventsDataJson.sort(function(a,b){
+        return - (new Date(b.event_start) - new Date(a.event_start));
+      });
       setUserEvents(eventsDataJson);
 
       var eventIdsItems = eventsDataJson.map((item, index) =>{ 
