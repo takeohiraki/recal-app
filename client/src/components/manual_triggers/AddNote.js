@@ -36,7 +36,7 @@ const AddNote = () => {
         body: JSON.stringify(exampleData)
       });
 
-      console.log("ran AddNote");
+      console.log("AddNote");
       console.log(JSON.stringify(exampleData));
 
       const responseData = await response.json();

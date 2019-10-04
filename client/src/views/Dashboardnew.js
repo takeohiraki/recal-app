@@ -4,11 +4,9 @@ import React, {
   useEffect 
 } from "react";
 
-import logo from "../assets/dark.png";
+import Axios from 'axios';
 
-import clsx from "clsx";
 import Columns from "../components/Columns/index";
-import NavBar from "../components/NavBar/NavBar";
 import {
   useAuth0
 } from "../../src/react-auth0-spa";
@@ -97,24 +95,14 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboardnew= () => {
 
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const [showResult, setShowResult] = useState(false);
   const [userNotes, setUserNotes] = useState("");
   const [userEvents, setUserEvents] = useState("");
+  const [userEventNotes, setUserEventNotes] = useState("");
 
   const {
     getTokenSilently, user
   } = useAuth0();
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  }
 
   const loadUserData = (userToken) => {
 
@@ -159,16 +147,18 @@ const Dashboardnew= () => {
       const eventNotesDataResponse = await fetch("/api/event/notes", {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: {
-          eventIds: eventIdsItemsJson.toString()
-        }
+        body: eventIdsItemsJson
       });
+
       let eventNotesDataJson = await  eventNotesDataResponse.json()
-      console.log(`Obtained ${eventNotesDataJson.length} User Event Notes`);
-      //console.log(eventNotesDataJson);
-      //setUserEvents(eventNotesDataJson);
+      console.log(`Obtained ${eventNotesDataJson.eventNotes.length} User Event Notes`);
+      setUserEventNotes(eventNotesDataJson);
+
+      console.log(eventNotesDataJson);
 
       setShowResult(true);
      
@@ -178,10 +168,63 @@ const Dashboardnew= () => {
 
   };
 
+  const addEventNoteToDB = async (eventNote) => {
+    try {
+      const token = await getTokenSilently();
+      console.log(`Add Note to Event - ${token.substring(0, 15) + '...'}`);
+
+      const response = await fetch("/api/event/add-note", {
+        method: "post",
+        headers: {
+          'Authorization': `Bearer ${token}`
+          , 'Content-Type': 'application/json'
+          , 'Accept': 'application/json',
+        },
+        body: JSON.stringify(eventNote)
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+
+      if(response.status == 201)
+      {
+
+        var note_id = responseData.eventNote.note_id;
+        var addedNote = userNotes.filter((item, index) => 
+        {
+          return item.id == note_id;
+        })[0];
+
+        var en = [...userEventNotes.eventNotes];
+        var n = [...userEventNotes.notes];
+
+        en.push(responseData.eventNote);
+
+        if(n.filter((item, index) => {
+            return item.id == note_id
+        }).length == 0)
+        {
+          n.push(addedNote);
+        }
+
+        setUserEventNotes({
+          eventNotes: en, 
+          notes: n}
+        );
+
+        //setShowResult(true);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const addNoteToDB = async (newNote) => {
     try {
       const token = await getTokenSilently();
-      console.log("TOKEN: " + token);
+      console.log(`Add Note - ${token.substring(0, 15) + '...'}`);
+
       const response = await fetch("/api/notes/add-note", {
         method: "post",
         headers: {
@@ -199,15 +242,95 @@ const Dashboardnew= () => {
       var existingNotes = [...userNotes];
       existingNotes.push(responseData);
   
+      existingNotes.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
       setUserNotes(existingNotes);
-      console.log(existingNotes);
 
     } catch (error) {
       console.error(error);
     }
   };
 
-  const noteAddedEvent = (event) => {
+  const deleteNoteInDB = async (note_id) => {
+
+    try {
+      const token = await getTokenSilently();
+      console.log(`Delete Note - ${token.substring(0, 15) + '...'}`);
+
+      /*const response = await fetch("/api/note/delete", {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+          , 'Content-Type': 'application/json'
+          , 'Accept': 'application/json',
+        },
+        body: note_id
+      });*/
+
+      const response = await Axios.post('/api/note/delete', 
+      {
+        note_id: note_id
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      const responseData = await response;
+
+      console.log(responseData);
+
+      if(response.status == 200)
+      {
+        var existingNotes = [...userNotes];
+        existingNotes = existingNotes.filter((item, index) => {
+          return item.id != note_id
+        });
+    
+        existingNotes.sort(function(a,b){
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+
+        setUserNotes(existingNotes);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  const noteAddedToEvent = async (note_id, event_id) => {
+    
+      var addedNote = userNotes.filter(n => { return n.id == note_id });
+      var targetEvent = userEvents.filter(e => { return e.id == event_id });
+
+      var newEventNote = {
+        event_id: event_id,
+        note_id: note_id
+      }
+
+      addEventNoteToDB(newEventNote);
+
+      //var existingEventNotes = [...userEventNotes];
+      //existingEventNotes.push(responseData);
+
+  }
+
+  const noteDeleted = (event, noteId) => {
+
+
+    console.log('NOTE_ID:' + noteId);
+
+    deleteNoteInDB(noteId);
+
+  }
+
+  const noteAdded = (event) => {
    
     if(event.key != 'Enter' || event.target.value == '') 
     {
@@ -232,86 +355,14 @@ const Dashboardnew= () => {
   
   return (
   <Fragment>
-   <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}
-      >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          className={clsx(classes.menuButton, open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" noWrap>
-          Dashboard
-        </Typography>
-      </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <Link to="/home"><img src={logo} alt="Recal" width="100" /></Link>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {[
-          {"Label": "Home", "LinkHref": "/Home"}, 
-          {"Label": "External Api", "LinkHref": "/External-Api"}, 
-          {"Label": "Dashboard", "LinkHref": "/Dashboard"}
-          ].map((item, index) => (
-            <ListItem button component="a" href={item.LinkHref} key={item.Label}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={item.Label} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {[  {"Label": "Calendar", "LinkHref": "/"}, 
-          {"Label": "Project", "LinkHref": "/"}
-          ].map((item, index) => (
-            <ListItem button component="a" href={item.LinkHref} key={item.Label}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={item.Label} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open
-        })}>
-        <div className={classes.drawerHeader} />
-        <Columns addNote={noteAddedEvent} notes={userNotes} events={userEvents} />
-      </main>
-    </div>
-  
+    {showResult && <Columns 
+        addNote={noteAdded} 
+        addNoteToEvent={noteAddedToEvent} 
+        deleteNote={noteDeleted}
+        notes={userNotes} 
+        events={userEvents} 
+        eventNotesBundle={userEventNotes} 
+    />}
   </Fragment>
 )};
 

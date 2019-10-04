@@ -7,10 +7,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
 import { useDrag } from 'react-dnd';
+import CancelIcon from '@material-ui/icons/Cancel'
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 275,
     marginTop: '20px'
   },
   title: {
@@ -20,19 +21,21 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  deleteIcon: {
+    verticalAlign: 'top',
+    cursor: 'Pointer'
+  }
 });
 
 export default function SimpleCard(props) {
   const classes = useStyles();
 
   const [{isDragging}, drag] = useDrag({
-    item: { type: 'NOTE_CARD' },
+    item: { note_id: props.id, note_text: props.message, type: 'NOTE_CARD' },
 		collect: monitor => ({
 			isDragging: !!monitor.isDragging(),
 		}),
   });
-
-  console.log(props);
 
   return (
     <div
@@ -46,9 +49,20 @@ export default function SimpleCard(props) {
     >
       <Card className={classes.card}>
         <CardContent>
-          <Typography  className={classes.title} variant="h5" component="h3">
-              #{props.message}
-          </Typography>
+          <Grid
+              justify="space-between" // Add it here :)
+              container 
+            >
+            <Grid item>
+              <Typography className={classes.title} variant="h5" component="h3">
+                  #{props.message}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <CancelIcon className={classes.deleteIcon}
+              onClick={(e) => props.deleteNote(e, props.id)}></CancelIcon>
+            </Grid>
+          </Grid>
           <Typography variant="body2" component="p">
               Created on&nbsp;
               <Moment format="DD-MM-YYYY HH:mm A">
@@ -57,7 +71,6 @@ export default function SimpleCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
         </CardActions>
       </Card>
     </div>

@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     user_name: DataTypes.STRING,
     user_id: DataTypes.STRING,
     slack_user_id: DataTypes.STRING,
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: '0'
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false

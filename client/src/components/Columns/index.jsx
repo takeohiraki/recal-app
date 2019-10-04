@@ -66,12 +66,13 @@ class Content extends Component {
         {
           Array.from(this.props.notes).map(note =>
           {
-              console.log(note);
               return <NoteCard 
               key={ note.id } 
+              id={ note.id } 
               message={ note.note_text } 
               created={ note.createdAt }
               username={ note.user_name }
+              deleteNote={ this.props.deleteNote }
               ></NoteCard>
           })
         }
@@ -85,15 +86,23 @@ class Content extends Component {
         {
           Array.from(this.props.events).map(event =>
           {
+              var event_note_ids = this.props.eventNotesBundle.eventNotes.filter(en => { return en.event_id == event.id }).map(en => { return en.note_id });
+              var event_notes = this.props.eventNotesBundle.notes.filter(n => { 
+                return event_note_ids.indexOf(n.id) > -1 
+              });
+              
               return <EventCard 
-              key={event.id}
-              title={event.event_title}
-              desc={event.event_description}
-              created={ event.event_created_at }
-              creator={ event.creator_email }
-              startDt={ event.event_start }
-              endDt={ event.event_end }
-              attendees={ JSON.parse(event.event_attendees) }
+                key={event.id}
+                event_id={event.id}
+                title={event.event_title}
+                desc={event.event_description}
+                created={ event.event_created_at }
+                creator={ event.creator_email }
+                startDt={ event.event_start }
+                endDt={ event.event_end }
+                attendees={ JSON.parse(event.event_attendees) }
+                notes={ event_notes }
+                addNoteToEvent= { this.props.addNoteToEvent }
               ></EventCard>
           })
         }
@@ -138,13 +147,6 @@ class Content extends Component {
     );
   }
 }
-
-/*  <ExternalApi />
-          <SeedCal />
-          <SeedNotes />
-          <AddNote />
-          <AddSlackNote />
-          */
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,

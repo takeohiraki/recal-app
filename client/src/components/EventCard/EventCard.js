@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Moment from 'react-moment';
+import CancelIcon from '@material-ui/icons/Cancel'
+import CheckIcon from '@material-ui/icons/Check'
+import EmailIcon from '@material-ui/icons/Help'
+import Avatar from '@material-ui/core/Avatar';
 
 import { useDrop } from 'react-dnd'
 
@@ -36,13 +40,19 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleCard(props) {
+
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
 	const [{ isOver }, drop] = useDrop({
     accept: "NOTE_CARD",
-    canDrop: () => { console.log('candrop'); return true; },
-		drop: () => { console.log('drop')},
+    canDrop: () => { 
+      return true; 
+    },
+		drop: (item) => {
+      props.addNoteToEvent(item.note_id, props.event_id);
+      console.log('Dropped note ' + item.note_id + ' into event ' + props.event_id);
+    },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
@@ -75,6 +85,11 @@ export default function SimpleCard(props) {
           <Typography className={classes.cardTitles} >
             Agenda & Notes
           </Typography>
+          {
+            props.notes.map((item, index) => (
+              <div key={item.id}>{item.note_text}</div>
+            ))
+          }
           <div
             ref={drop}
             style={{
@@ -108,6 +123,9 @@ export default function SimpleCard(props) {
             {
               props.attendees.map((item, index) => (
                 <li key={item.email}>
+                  {(item.responseStatus == 'accepted') && <CheckIcon></CheckIcon>}
+                  {(item.responseStatus == 'needsAction') && <EmailIcon></EmailIcon>}
+                  {(item.responseStatus == 'rejected') && <CancelIcon></CancelIcon>}
                   {item.email}
                 </li>
               ))
@@ -117,7 +135,7 @@ export default function SimpleCard(props) {
       </Grid>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+      
       </CardActions>
     </Card>
   );

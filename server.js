@@ -114,8 +114,8 @@ app.use(routes_main);*/
 app.use(slack_routes); */
 
 // Routes for handling Google data
-/* var google_routes = require("./controllers/google_routes.js");
-app.use(google_routes); */
+//var google_routes = require("./controllers/google_routes.js");
+//app.use(google_routes); 
 
 // Routes for handling email data
 var email_routes = require("./controllers/email_routes.js");

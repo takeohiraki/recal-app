@@ -258,7 +258,7 @@ let googleCalMethods = {
   },
   // Pulls calendar events from Google
   getEventsFromGoogle: function (auth) {
-    console.log("run func getEventsFromGoogle");
+    //console.log("run func getEventsFromGoogle");
 
     return new Promise(function (resolve, reject) {
       const calendar = google.calendar({
@@ -282,11 +282,10 @@ let googleCalMethods = {
             console.log("The API returned an error: " + err);
             resolve("error");
           }
-          console.log("res.data.items");
+
           const events = res.data.items;
 
           if (events.length) {
-            console.log("resolve");
             resolve(events);
           } else {
             console.log("No upcoming events found.");
@@ -298,8 +297,7 @@ let googleCalMethods = {
   },
   // Create new entries in the DB based on the events that are retrieved from Google
   writeMeetingDB: function (meetingsArr, userId) {
-    console.log("running func writeMeetingDB");
-
+  
     return new Promise(function (resolve, reject) {
       let gCalArr = [];
 
