@@ -258,7 +258,7 @@ let googleCalMethods = {
   },
   // Pulls calendar events from Google
   getEventsFromGoogle: function (auth) {
-    console.log("run func getEventsFromGoogle");
+    //console.log("run func getEventsFromGoogle");
 
     return new Promise(function (resolve, reject) {
       const calendar = google.calendar({
