@@ -265,10 +265,14 @@ let googleCalMethods = {
         version: "v3",
         auth
       });
+
+      const dateMax = new Date();
+      dateMax.setDate(dateMax.getDate() + 7);
+
       calendar.events.list({
           calendarId: "primary",
-          // timeMin: (new Date()).toISOString(),
           timeMin: new Date().toISOString(),
+          timeMax: dateMax,
           maxResults: 10,
           singleEvents: true,
           orderBy: "startTime",
@@ -300,6 +304,9 @@ let googleCalMethods = {
   
     return new Promise(function (resolve, reject) {
       let gCalArr = [];
+
+      if(meetingsArr === undefined)
+        return;
 
       meetingsArr.forEach(function (element) {
         var attendees = [];
