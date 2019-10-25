@@ -94,7 +94,7 @@ import React, {
     }
   }));
   
-  const Dashboardnew= () => {
+  const Dashboard = () => {
   
     const classes = useStyles();
     const theme = useTheme();
@@ -393,4 +393,4 @@ import React, {
     </Fragment>
   )};
   
-  export default Dashboardnew;
+  export default Dashboard;
