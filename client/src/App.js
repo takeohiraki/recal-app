@@ -37,7 +37,6 @@ import PrivateRoute from "./components/PrivateRoute";
 
 // COMPONENTS
 import Loading from "./components/Loading";
-import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 
 // REQUIRE AUTH

@@ -8,13 +8,11 @@ import React, {
   
   import clsx from "clsx";
   import Columns from "../components/Columns/index";
-  import NavBar from "../components/NavBar/NavBar";
   import {
     useAuth0
   } from "../../src/react-auth0-spa";
   
   import GetNote from "../components/Notes/Notes";
-  import Sidebar from "../components/Sidebar";
   import Notes from "../components/Notes/test";
   
   import { makeStyles, useTheme } from "@material-ui/core/styles";
