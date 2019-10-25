@@ -3,7 +3,7 @@ var path = require("path");
 
 var router_project = express.Router();
 
-const models = require('../models');
+const models = require('../../models');
 const projects = models.projects;
 const projectsEvents = models.projects_events;
 const googleCalEventsDB = models.google_cal_events;

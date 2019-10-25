@@ -108,29 +108,13 @@ models.sequelize.sync({
 // Routes - importing so server can access them
 // =============================================================
 
-// Routes for navigating around app
-/*var routes_main = require("./controllers/main_routes.js");
-app.use(routes_main);*/
-
-// Routes for handling Slack data
-/* var slack_routes = require("./controllers/slack_routes.js");
-app.use(slack_routes); */
-
-// Routes for handling Google data
-//var google_routes = require("./controllers/google_routes.js");
-//app.use(google_routes); 
-
 // Routes for handling email data
-var email_routes = require("./controllers/email_routes.js");
+var email_routes = require("./routes/api/email_routes.js");
 app.use(email_routes);
 
 // Routes for handling project data
-var project_routes = require("./controllers/project_routes.js");
+var project_routes = require("./routes/api/project_routes.js");
 app.use(project_routes);
-
-// Routes for handling auth
-/*var auth_routes = require("./controllers/auth_routes.js");
-app.use(auth_routes);*/
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets.

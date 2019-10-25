@@ -1,7 +1,7 @@
 var express = require("express");
 var router_email = express.Router();
 
-var nodemailer = require('../middleware/nodemailer');
+var nodemailer = require('../../middleware/nodemailer');
 // Basic routes between the main pages
 
 router_email.get("/api/email/read", function (req, res) {
