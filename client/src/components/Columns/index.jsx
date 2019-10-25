@@ -2,7 +2,6 @@ import React, { Fragment, Component } from "react";
 import PropTypes from 'prop-types';
 import Moment from "moment";
 
-import ExternalApi from "../manual_triggers/ExternalApi.js";
 import SeedCal from "../manual_triggers/SeedCal.js";
 import SeedNotes from "../manual_triggers/SeedNotes.js";
 import AddNote from "../manual_triggers/AddNote.js";

@@ -37,21 +37,16 @@ import PrivateRoute from "./components/PrivateRoute";
 
 // COMPONENTS
 import Loading from "./components/Loading";
-import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer";
 
 // REQUIRE AUTH
 import Dashboard from "./views/Dashboard";
-import Dashboardnew from "./views/Dashboardnew";
 import Profile from "./views/Profile";
-import ExternalApi from "./components/manual_triggers/ExternalApi";
 import Settings from "./views/Settings";
 
 // DOES NOT REQUIRE AUTH
-import Home from "./views/Home";
 import Privacy from "./views/Privacy";
 import AgendaSubmission from "./views/AgendaSubmission";
-import LandingPage from "./views/LandingPage/LandingPage";
 import AgendaForm from "./views/AgendaForm";
 
 // LIB
@@ -195,7 +190,6 @@ const App = () => {
             <List>
               {[
               {"Label": "Home", "LinkHref": "/Home"}, 
-              {"Label": "External Api", "LinkHref": "/External-Api"}, 
               {"Label": "Dashboard", "LinkHref": "/Dashboard"}
               ].map((item, index) => (
                 <ListItem button component="a" href={item.LinkHref} key={item.Label}>
@@ -225,15 +219,15 @@ const App = () => {
             })}>
               <div className={classes.drawerHeader} />
               <Switch>
-                <Route path="/" exact component={LandingPage} />
+                <Route path="/" exact component={() => {
+                  window.location.href = 'http://landing.recal.work';
+                  return null;
+                }} />
                 <Route path="/privacy" exact component={Privacy} />
-                <Route path="/homepage" exact component={Home} />
                 <Route path="/agenda-submission" exact component={AgendaSubmission} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
-                <PrivateRoute path="/home" component={Dashboardnew} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/settings" component={Settings} />
-                <PrivateRoute path="/external-api" component={ExternalApi} />
               </Switch>
             </main>
           </div>

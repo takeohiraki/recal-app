@@ -6,7 +6,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(far, fas)
 
-
 function initFontAwesome() {
   library.add(faLink);
   library.add(faUser);
