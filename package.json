@@ -31,7 +31,7 @@
     "googleapis": "^41.0.1",
     "helmet": "^3.20.0",
     "highlight": "^0.2.4",
-    "highlight.js": "^9.15.9",
+    "highlight.js": "^10.4.1",
     "http-errors": "^1.7.3",
     "i": "^0.3.6",
     "imap": "^0.8.19",
